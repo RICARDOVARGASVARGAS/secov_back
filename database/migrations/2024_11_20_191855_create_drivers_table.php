@@ -22,8 +22,8 @@ return new class extends Migration
             $table->date('birth_date');
             $table->string('image')->nullable();
             $table->string('email')->nullable();
-            $table->string('phone_number', 15)->nullable();
-            $table->string('address', 255)->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
             $table->enum('gender', ['masculino', 'femenino'])->default('masculino');
             // Datos del documentos de manejo
             $table->string('license_number')->nullable();
