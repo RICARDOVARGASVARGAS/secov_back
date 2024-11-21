@@ -1,19 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BrandController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('getBrands', [BrandController::class, 'getBrands'])->name('getBrands');
+Route::post('getBrand/{item}', [BrandController::class, 'getBrand'])->name('getBrand');
+Route::post('registerBrand', [BrandController::class, 'registerBrand'])->name('registerBrand');
+Route::post('updateBrand/{brand}', [BrandController::class, 'updateBrand'])->name('updateBrand');
+Route::delete('deleteBrand/{item}', [BrandController::class, 'deleteBrand'])->name('deleteBrand');
