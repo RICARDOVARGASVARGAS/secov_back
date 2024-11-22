@@ -15,8 +15,9 @@ class ListRequest extends FormRequest
     {
         return [
             'search' => ['nullable', 'string'],
-            'page' => ['nullable', 'integer', 'min:1'],
-            'perPage' => ['nullable', 'integer', 'min:1'],
+            'page' => ['required', 'integer', 'min:1'],
+            'perPage' => ['required', 'integer', 'min:1', 'max:100'],
+            'sort' => ['required', 'in:asc,desc'],
         ];
     }
 

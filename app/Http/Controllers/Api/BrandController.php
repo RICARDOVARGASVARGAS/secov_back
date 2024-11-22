@@ -14,7 +14,7 @@ class BrandController extends Controller
 {
     function getBrands(ListRequest $request)
     {
-        $items = Brand::included()->where('name', 'like', '%' . $request->search . '%')->orderBy('id', 'desc');
+        $items = Brand::included()->where('name', 'like', '%' . $request->search . '%')->orderBy('id', $request->sort);
         $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
 
         return BrandResource::collection($items);
