@@ -6,23 +6,30 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ColorRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
+        if (request()->routeIs('registerColor')) {
+            $name = 'unique:color,name';
+        } elseif (request()->routeIs('updateColor')) {
+            $name =  'unique:color,name,' . request()->route('item')->id;
+        }
+
         return [
-            //
+            'name' => ['required', $name],
+            'hex' => ['required', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Color',
+            'hex' => 'Hex',
         ];
     }
 }
