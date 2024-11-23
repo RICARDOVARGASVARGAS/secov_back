@@ -16,7 +16,7 @@ class BrandRequest extends FormRequest
         if (request()->routeIs('registerBrand')) {
             $name = 'unique:brands,name';
         } elseif (request()->routeIs('updateBrand')) {
-            $name =  'unique:brands,name,' . $this->route('item');
+            $name =  'unique:brands,name,' . request()->route('item')->id;
         }
 
         return [
