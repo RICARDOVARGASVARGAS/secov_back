@@ -14,9 +14,9 @@ class ColorRequest extends FormRequest
     public function rules(): array
     {
         if (request()->routeIs('registerColor')) {
-            $name = 'unique:color,name';
+            $name = 'unique:colors,name';
         } elseif (request()->routeIs('updateColor')) {
-            $name =  'unique:color,name,' . request()->route('item')->id;
+            $name =  'unique:colors,name,' . request()->route('item')->id;
         }
 
         return [

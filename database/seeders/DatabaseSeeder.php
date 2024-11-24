@@ -16,18 +16,15 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        Driver::factory(20)->create();
         Color::factory(10)->create();
         Example::factory(10)->create();
         TypeCar::factory(10)->create();
         Group::factory(10)->create();
         Brand::factory(10)->create();
         Year::factory(10)->create();
+        Driver::factory(20)->create();
         Car::factory(30)->create();
     }
 }

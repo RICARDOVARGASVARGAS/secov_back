@@ -56,7 +56,9 @@ class ColorController extends Controller
             DB::beginTransaction();
             $item->delete();
             DB::commit();
-            return ColorResource::make($item);
+            return ColorResource::make($item)->additional(([
+                'message' => 'Color Borrado.',
+            ]));
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
