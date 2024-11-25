@@ -15,13 +15,17 @@ class CarRequest extends FormRequest
     {
         if (request()->routeIs('registerCar')) {
             $plate = 'unique:cars,plate';
+            $chassis = 'unique:cars,chassis';
+            $motor = 'unique:cars,motor';
         } elseif (request()->routeIs('updateCar')) {
             $plate =  'unique:cars,plate,' . request()->route('item')->id;
+            $chassis =  'unique:cars,chassis,' . request()->route('item')->id;
+            $motor =  'unique:cars,motor,' . request()->route('item')->id;
         }
         return [
             'plate' => ['required', $plate],
-            'chassis' => ['required', 'string', 'min:3', 'max:50'],
-            'motor' => ['required', 'string', 'min:3', 'max:50'],
+            'chassis' => ['required', $chassis, 'string', 'min:3', 'max:50'],
+            'motor' => ['required', $motor, 'string', 'min:3', 'max:50'],
             'file_car' => ['nullable'],
             'brand_id' => ['required', 'exists:brands,id'],
             'type_car_id' => ['required', 'exists:type_cars,id'],

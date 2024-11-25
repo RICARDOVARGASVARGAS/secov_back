@@ -26,7 +26,6 @@ class CarController extends Controller
 
     function registerCar(CarRequest $request)
     {
-        return request()->all();
         $item = Car::create([
             'plate' => $request->plate,
             'chassis' => $request->chassis,
