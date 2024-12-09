@@ -14,8 +14,20 @@ class GroupController extends Controller
 {
     function getGroups(ListRequest $request)
     {
-        $items = Group::included()->where('name', 'like', '%' . $request->search . '%')->orderBy('id', $request->sort);
-        $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
+        $query = Group::included()
+            ->when($request->search, fn($q) => $q->where('name', 'like', '%' . $request->search . '%'))
+            ->orderBy('id', $request->sort);
+
+        if ($request->perPage === 'all') {
+            $items = $query->get();
+        } else {
+            $items = $query->paginate(
+                $request->perPage,
+                ['*'],
+                'page',
+                $request->page
+            );
+        }
 
         return GroupResource::collection($items);
     }
