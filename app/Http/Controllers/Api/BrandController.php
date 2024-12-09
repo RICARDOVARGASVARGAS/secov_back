@@ -12,13 +12,26 @@ use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
-    function getBrands(ListRequest $request)
+    public function getBrands(ListRequest $request)
     {
-        $items = Brand::included()->where('name', 'like', '%' . $request->search . '%')->orderBy('id', $request->sort);
-        $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
+        $query = Brand::included()
+            ->when($request->search, fn($q) => $q->where('name', 'like', '%' . $request->search . '%'))
+            ->orderBy('id', $request->sort);
+
+        if ($request->perPage === 'all') {
+            $items = $query->get(); // Obtén todos los resultados.
+        } else {
+            $items = $query->paginate(
+                $request->perPage, // Cantidad por página.
+                ['*'], // Selección de columnas.
+                'page', // Nombre del parámetro de la página.
+                $request->page // Página actual.
+            );
+        }
 
         return BrandResource::collection($items);
     }
+
 
     function registerBrand(BrandRequest $request)
     {

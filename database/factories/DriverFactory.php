@@ -22,7 +22,7 @@ class DriverFactory extends Factory
             'email' => $this->faker->safeEmail(),
             'phone_number' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
-            'gender' => $this->faker->randomElement(['masculino', 'femenino']),
+            'gender' => $this->faker->randomElement(['M', 'F']),
             'license_number' => $this->faker->numerify('###########'),
             'license_expiration_date' => $this->faker->date(),
             'license_issue_date' => $this->faker->date(),
