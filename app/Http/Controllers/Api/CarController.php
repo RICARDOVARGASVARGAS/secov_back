@@ -37,6 +37,7 @@ class CarController extends Controller
             'year_id' => $request->year_id,
             'color_id' => $request->color_id,
             'example_id' => $request->example_id,
+            'driver_id' => $request->driver_id,
             'number_soat' => $request->number_soat,
             'date_soat_issue' => $request->date_soat_issue,
             'date_soat_expiration' => $request->date_soat_expiration,
@@ -66,6 +67,7 @@ class CarController extends Controller
             'year_id' => $request->year_id,
             'color_id' => $request->color_id,
             'example_id' => $request->example_id,
+            'driver_id' => $request->driver_id,
             'number_soat' => $request->number_soat,
             'date_soat_issue' => $request->date_soat_issue,
             'date_soat_expiration' => $request->date_soat_expiration,
@@ -98,7 +100,7 @@ class CarController extends Controller
     // Devolver la lista de vehículos de un conductor
     function getCarsByDriver($driver_id)
     {
-        $item = Car::included()->where('driver_id', $driver_id)->get();
+        $item = Car::included()->with(['brand', 'typeCar', 'group', 'year', 'color', 'example'])->where('driver_id', $driver_id)->get();
         return CarResource::collection($item);
     }
 }

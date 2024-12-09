@@ -21,6 +21,7 @@ class Car extends Model
         'year_id',
         'color_id',
         'example_id',
+        'driver_id',
         'number_soat',
         'file_soat',
         'date_soat_issue',
@@ -38,12 +39,23 @@ class Car extends Model
         'year_id',
         'color_id',
         'example_id',
+        'driver_id',
         'number_soat',
         'date_soat_issue',
         'date_soat_expiration',
         'file_car',
         'file_soat',
         'file_technical_review',
+    ];
+
+    protected $allowIncluded = [
+        'brand',
+        'typeCar',
+        'group',
+        'year',
+        'color',
+        'example',
+        'driver',
     ];
 
     public function brand()
