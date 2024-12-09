@@ -94,4 +94,11 @@ class CarController extends Controller
             ], 500);
         }
     }
+
+    // Devolver la lista de vehículos de un conductor
+    function getCarsByDriver($driver_id)
+    {
+        $item = Car::included()->where('driver_id', $driver_id)->get();
+        return CarResource::collection($item);
+    }
 }

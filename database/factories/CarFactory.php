@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Brand;
 use App\Models\Color;
+use App\Models\Driver;
 use App\Models\Example;
 use App\Models\Group;
 use App\Models\TypeCar;
@@ -28,6 +29,7 @@ class CarFactory extends Factory
             'year_id' => Year::all()->random()->id,
             'color_id' => Color::all()->random()->id,
             'example_id' => Example::all()->random()->id,
+            'driver_id' => Driver::all()->random()->id,
             'number_soat' => $this->faker->numerify('###########'),
             'file_soat' => $this->faker->imageUrl(),
             'date_soat_issue' => $this->faker->date(),

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('year_id')->constrained();
             $table->foreignId('color_id')->constrained();
             $table->foreignId('example_id')->constrained();
+            $table->foreignId('driver_id')->constrained();
             // Soat
             $table->string('number_soat')->nullable();
             $table->string('file_soat')->nullable();
