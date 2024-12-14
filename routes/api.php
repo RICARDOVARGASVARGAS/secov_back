@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\ExampleController;
 use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\Api\RolePermissionController;
 use App\Http\Controllers\Api\TypeCarController;
 use App\Http\Controllers\Api\YearController;
 use Illuminate\Support\Facades\Route;
@@ -58,3 +59,24 @@ Route::get('getCar/{item}', [CarController::class, 'getCar'])->name('getCar');
 Route::post('registerCar', [CarController::class, 'registerCar'])->name('registerCar');
 Route::put('updateCar/{item}', [CarController::class, 'updateCar'])->name('updateCar');
 Route::delete('deleteCar/{item}', [CarController::class, 'deleteCar'])->name('deleteCar');
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+});
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('roles', [RolePermissionController::class, 'indexRolesWithPermissions']);
+    Route::get('permissions', [RolePermissionController::class, 'indexPermissions']);
+    Route::post('roles', [RolePermissionController::class, 'storeRole']);
+    Route::post('permissions', [RolePermissionController::class, 'storePermission']);
+    Route::post('roles/{roleId}/assign-permissions', [RolePermissionController::class, 'assignPermissionToRole']);
+});
