@@ -50,6 +50,8 @@ class Driver extends Model
         'image_license',
     ];
 
+    protected $allowIncluded = ['cars', 'cars.brand', 'cars.typeCar', 'cars.group', 'cars.year', 'cars.color', 'cars.example'];
+
     public function cars()
     {
         return $this->hasMany(Car::class);
