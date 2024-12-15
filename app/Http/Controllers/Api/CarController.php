@@ -85,13 +85,13 @@ class CarController extends Controller
             $item->delete();
             DB::commit();
             return CarResource::make($item)->additional(([
-                'message' => 'Vehículo Borrado.',
+                'message' => 'Vehículo Eliminado.',
             ]));
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'error' => $e->getMessage(),
-                'message' => 'Car No Borrado.',
+                'message' => 'Car No Eliminado.',
                 'status' => 500,
             ], 500);
         }
