@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('color_id')->constrained();
             $table->foreignId('example_id')->constrained();
             $table->foreignId('driver_id')->constrained();
+            $table->integer('number_of_seats'); // Número de asientos
             // Soat
             $table->string('number_soat')->nullable();
             $table->string('file_soat')->nullable();

@@ -92,4 +92,19 @@ class Car extends Model
     {
         return $this->belongsTo(Driver::class);
     }
+
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class);
+    }
+
+    public function insurances()
+    {
+        return $this->hasMany(Insurance::class);
+    }
+
+    public function permits()
+    {
+        return $this->hasMany(Permit::class);
+    }
 }
