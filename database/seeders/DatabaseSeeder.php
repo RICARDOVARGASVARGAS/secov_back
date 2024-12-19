@@ -10,6 +10,10 @@ use App\Models\Color;
 use App\Models\Driver;
 use App\Models\Example;
 use App\Models\Group;
+use App\Models\Inspection;
+use App\Models\Insurance;
+use App\Models\License;
+use App\Models\Permit;
 use App\Models\TypeCar;
 use App\Models\Year;
 use Illuminate\Database\Seeder;
@@ -24,7 +28,14 @@ class DatabaseSeeder extends Seeder
         Group::factory(10)->create();
         Brand::factory(10)->create();
         Year::factory(10)->create();
-        Driver::factory(20)->create();
-        Car::factory(30)->create();
+        Driver::factory(20)->create()->each(function ($driver) {
+            $driver->licenses()->saveMany(License::factory(3)->make());
+            // $driver->cars()->saveMany(Car::factory(3)->make());
+        });
+        Car::factory(30)->create()->each(function ($car) {
+            // $car->inspections()->saveMany(Inspection::factory(3)->make());
+            // $car->insurances()->saveMany(Insurance::factory(3)->make());
+            // $car->permits()->saveMany(Permit::factory(3)->make());
+        });
     }
 }

@@ -22,30 +22,13 @@ class Car extends Model
         'color_id',
         'example_id',
         'driver_id',
-        'number_soat',
-        'file_soat',
-        'date_soat_issue',
-        'date_soat_expiration',
-        'file_technical_review',
+        'number_of_seats',
     ];
 
     protected $allowFilter = [
         'plate',
         'chassis',
         'motor',
-        'brand_id',
-        'type_car_id',
-        'group_id',
-        'year_id',
-        'color_id',
-        'example_id',
-        'driver_id',
-        'number_soat',
-        'date_soat_issue',
-        'date_soat_expiration',
-        'file_car',
-        'file_soat',
-        'file_technical_review',
     ];
 
     protected $allowIncluded = [
@@ -56,6 +39,9 @@ class Car extends Model
         'color',
         'example',
         'driver',
+        'inspections',
+        'insurances',
+        'permits',
     ];
 
     public function brand()

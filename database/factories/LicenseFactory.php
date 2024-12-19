@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Driver;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +10,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LicenseFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'number' => $this->faker->unique()->numerify('###########'),
+            'class' => $this->faker->word(),
+            'category' => $this->faker->word(),
+            'issue_date' => $this->faker->date(),
+            'renewal_date' => $this->faker->date(),
+            'file' => $this->faker->imageUrl(),
+            // 'driver_id' => Driver::all()->random()->id
         ];
     }
 }

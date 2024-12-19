@@ -19,9 +19,9 @@ class CarFactory extends Factory
     public function definition(): array
     {
         return [
-            'plate' => $this->faker->numerify('###########'),
-            'chassis' => $this->faker->numerify('###########'),
-            'motor' => $this->faker->numerify('###########'),
+            'plate' => $this->faker->unique()->numerify('###########'),
+            'chassis' => $this->faker->unique()->numerify('###########'),
+            'motor' => $this->faker->unique()->numerify('###########'),
             'file_car' => $this->faker->imageUrl(),
             'brand_id' => Brand::all()->random()->id,
             'type_car_id' => TypeCar::all()->random()->id,
@@ -30,11 +30,7 @@ class CarFactory extends Factory
             'color_id' => Color::all()->random()->id,
             'example_id' => Example::all()->random()->id,
             'driver_id' => Driver::all()->random()->id,
-            'number_soat' => $this->faker->numerify('###########'),
-            'file_soat' => $this->faker->imageUrl(),
-            'date_soat_issue' => $this->faker->date(),
-            'date_soat_expiration' => $this->faker->date(),
-            'file_technical_review' => $this->faker->imageUrl(),
+            'number_of_seats' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
