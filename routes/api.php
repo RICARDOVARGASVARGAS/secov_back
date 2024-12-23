@@ -53,6 +53,7 @@ Route::post('registerDriver', [DriverController::class, 'registerDriver'])->name
 Route::put('updateDriver/{item}', [DriverController::class, 'updateDriver'])->name('updateDriver');
 Route::delete('deleteDriver/{item}', [DriverController::class, 'deleteDriver'])->name('deleteDriver');
 Route::get('getDriverLicenses/{item}', [DriverController::class, 'getDriverLicenses'])->name('getDriverLicenses');
+Route::get('getDriverLicense/{item}', [DriverController::class, 'getDriverLicense'])->name('getDriverLicense');
 Route::post('registerDriverLicense', [DriverController::class, 'registerDriverLicense'])->name('registerDriverLicense');
 Route::put('updateDriverLicense/{license}', [DriverController::class, 'updateDriverLicense'])->name('updateDriverLicense');
 Route::delete('deleteDriverLicense/{license}', [DriverController::class, 'deleteDriverLicense'])->name('deleteDriverLicense');

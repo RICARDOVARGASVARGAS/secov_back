@@ -106,6 +106,12 @@ class DriverController extends Controller
         return DriverResource::collection($licensesWithStatus);
     }
 
+    // Obtener licencia de un conductor
+    function getDriverLicense(License $item)
+    {
+        return LicenseResource::make($item);
+    }
+
     // Registrar licencia de un conductor
     function registerDriverLicense(Request $request)
     {
