@@ -31,12 +31,6 @@ class DriverRequest extends FormRequest
             'phone_number' => ['nullable', 'string', 'min:3', 'max:20'],
             'address' => ['nullable'],
             'gender' => ['required', 'in:M,F'],
-            'license_number' => ['nullable'],
-            'license_expiration_date' => ['nullable', 'date'],
-            'license_issue_date' => ['nullable', 'date'],
-            'license_class' => ['nullable'],
-            'license_category' => ['nullable'],
-            'image_license' => ['nullable'],
         ];
     }
 
@@ -53,13 +47,7 @@ class DriverRequest extends FormRequest
             'email' => 'Email',
             'phone_number' => 'Numero de Teléfono',
             'address' => 'Dirección',
-            'gender' => 'Genero',
-            'license_number' => 'Numero de Licencia',
-            'license_expiration_date' => 'Fecha de Expiración de Licencia',
-            'license_issue_date' => 'Fecha de Emisión de Licencia',
-            'license_class' => 'Clase de Licencia',
-            'license_category' => 'Categoría de Licencia',            
-            'image_license' => 'Imagen de Licencia',    
+            'gender' => 'Genero',   
         ];
     }
 }

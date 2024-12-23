@@ -22,12 +22,6 @@ class Driver extends Model
         'phone_number',
         'address',
         'gender',
-        'license_number',
-        'license_expiration_date',
-        'license_issue_date',
-        'license_class',
-        'license_category',
-        'image_license',
     ];
 
     protected $allowFilter = [
@@ -41,13 +35,6 @@ class Driver extends Model
         'phone_number',
         'address',
         'gender',
-        'license_number',
-        'license_expiration_date',
-        'license_issue_date',
-        'license_class',
-        'license_category',
-        'image',
-        'image_license',
     ];
 
     protected $allowIncluded = ['cars', 'cars.brand', 'cars.typeCar', 'cars.group', 'cars.year', 'cars.color', 'cars.example', 'licenses'];

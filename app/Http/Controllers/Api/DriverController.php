@@ -21,7 +21,6 @@ class DriverController extends Controller
             ->orWhere('first_name', 'like', '%' . $request->search . '%')
             ->orWhere('last_name', 'like', '%' . $request->search . '%')
             ->orWhere('email', 'like', '%' . $request->search . '%')
-            ->orWhere('license_number', 'like', '%' . $request->search . '%')
             ->orderBy('id', $request->sort);
         $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
 
@@ -40,12 +39,7 @@ class DriverController extends Controller
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'address' => $request->address,
-            'gender' => $request->gender,
-            'license_number' => $request->license_number,
-            'license_expiration_date' => $request->license_expiration_date,
-            'license_issue_date' => $request->license_issue_date,
-            'license_class' => $request->license_class,
-            'license_category' => $request->license_category,
+            'gender' => $request->gender
         ]);
 
         return DriverResource::make($item)->additional([
@@ -72,11 +66,7 @@ class DriverController extends Controller
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'gender' => $request->gender,
-            'license_number' => $request->license_number,
-            'license_expiration_date' => $request->license_expiration_date,
-            'license_issue_date' => $request->license_issue_date,
-            'license_class' => $request->license_class,
-            'license_category' => $request->license_category,
+            'image' => $request->image,
         ]);
 
         return DriverResource::make($item)->additional([
@@ -107,7 +97,13 @@ class DriverController extends Controller
     function getDriverLicenses(Driver $item)
     {
         $licenses = $item->licenses()->orderBy('id', 'desc')->get();
-        return DriverResource::collection($licenses);
+
+        $licensesWithStatus = $licenses->map(function ($license) {
+            $license->status = $license->renewal_date >= now()->toDateString() ? 'active' : 'expired';
+            return $license;
+        });
+
+        return DriverResource::collection($licensesWithStatus);
     }
 
     // Registrar licencia de un conductor

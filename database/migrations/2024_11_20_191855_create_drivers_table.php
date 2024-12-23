@@ -25,13 +25,6 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->enum('gender', ['M', 'F'])->default('M');
-            // Datos del documentos de manejo
-            $table->string('license_number')->nullable();
-            $table->string('license_expiration_date')->nullable();
-            $table->string('license_issue_date')->nullable();
-            $table->string('license_class')->nullable();
-            $table->string('license_category')->nullable();
-            $table->string('image_license')->nullable();
             $table->timestamps();
         });
     }

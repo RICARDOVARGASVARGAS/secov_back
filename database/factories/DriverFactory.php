@@ -18,17 +18,11 @@ class DriverFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'birth_date' => $this->faker->date(),
-            'image' => $this->faker->imageUrl(),
+            // 'image' => $this->faker->imageUrl(),
             'email' => $this->faker->safeEmail(),
             'phone_number' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
-            'gender' => $this->faker->randomElement(['M', 'F']),
-            'license_number' => $this->faker->numerify('###########'),
-            'license_expiration_date' => $this->faker->date(),
-            'license_issue_date' => $this->faker->date(),
-            'license_class' => $this->faker->numerify('###########'),
-            'license_category' => $this->faker->numerify('###########'),
-            'image_license' => $this->faker->imageUrl(),
+            'gender' => $this->faker->randomElement(['M', 'F'])
         ];
     }
 }
