@@ -155,6 +155,7 @@ class DriverController extends Controller
             'class' => 'required',
             'category' => 'required',
             'driver_id' => 'required|exists:drivers,id',
+            'file' => 'nullable',
         ], [], [
             'number' => 'Número de Licencia',
             'renewal_date' => 'Fecha de Vencimiento',
@@ -162,6 +163,7 @@ class DriverController extends Controller
             'class' => 'Clase',
             'category' => 'Categoría',
             'driver_id' => 'Conductor',
+            'file' => 'Archivo',
         ]);
 
         $license->update([
@@ -170,7 +172,8 @@ class DriverController extends Controller
             'issue_date' => $request->issue_date,
             'class' => $request->class,
             'category' => $request->category,
-            'driver_id' => $request->driver_id
+            'driver_id' => $request->driver_id,
+            'file' => $request->file,
         ]);
 
         return LicenseResource::make($license)->additional([

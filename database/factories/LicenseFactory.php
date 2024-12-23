@@ -18,7 +18,7 @@ class LicenseFactory extends Factory
             'category' => $this->faker->word(),
             'issue_date' => $this->faker->date(),
             'renewal_date' => $this->faker->date(),
-            'file' => $this->faker->imageUrl(),
+            // 'file' => $this->faker->imageUrl(),
             // 'driver_id' => Driver::all()->random()->id
         ];
     }
