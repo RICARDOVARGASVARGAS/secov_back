@@ -26,7 +26,7 @@ class CarRequest extends FormRequest
             'plate' => ['required', $plate],
             'chassis' => ['required', $chassis, 'string', 'min:3', 'max:50'],
             'motor' => ['required', $motor, 'string', 'min:3', 'max:50'],
-            'file_car' => ['nullable'],
+            'image_car' => ['nullable'],
             'brand_id' => ['required', 'exists:brands,id'],
             'type_car_id' => ['required', 'exists:type_cars,id'],
             'group_id' => ['required', 'exists:groups,id'],
@@ -34,11 +34,9 @@ class CarRequest extends FormRequest
             'color_id' => ['required', 'exists:colors,id'],
             'example_id' => ['required', 'exists:examples,id'],
             'driver_id' => ['required', 'exists:drivers,id'],
-            'number_soat' => ['nullable'],
-            'file_soat' => ['nullable'],
-            'date_soat_issue' => ['nullable', 'date'],
-            'date_soat_expiration' => ['nullable', 'date'],
-            'file_technical_review' => ['nullable'],
+            'group_number' => ['nullable', 'string'],
+            'number_of_seats' => ['required', 'integer'],
+            'file_car' => ['nullable'],
         ];
     }
 
@@ -51,16 +49,14 @@ class CarRequest extends FormRequest
             'file_car' => 'Archivo Vehículo',
             'brand_id' => 'Marca',
             'type_car_id' => 'Tipo de Vehículo',
-            'group_id' => 'Grupo',
+            'group_id' => 'Asociación',
             'year_id' => 'Año',
             'color_id' => 'Color',
-            'example_id' => 'Ejemplo',
+            'example_id' => 'Modelo/Clase',
             'driver_id' => 'Conductor',
-            'number_soat' => 'Número de Soat',
-            'file_soat' => 'Archivo Soat',
-            'date_soat_issue' => 'Fecha de Emisión de Soat',
-            'date_soat_expiration' => 'Fecha de Expiración de Soat',
-            'file_technical_review' => 'Archivo de Revisión Técnica',
+            'group_number' => 'Número de Asociación',
+            'number_of_seats' => 'Número de Asientos',
+            'image_car' => 'Imagen',
         ];
     }
 }

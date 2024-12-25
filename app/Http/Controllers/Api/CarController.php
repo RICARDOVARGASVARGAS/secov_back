@@ -15,9 +15,7 @@ class CarController extends Controller
     function getCars(ListRequest $request)
     {
         $items = Car::included()->where('plate', 'like', '%' . $request->search . '%')
-            ->orWhere('chassis', 'like', '%' . $request->search . '%')
             ->orWhere('motor', 'like', '%' . $request->search . '%')
-            ->orWhere('number_soat', 'like', '%' . $request->search . '%')
             ->orderBy('id', $request->sort);
         $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
 
@@ -30,7 +28,6 @@ class CarController extends Controller
             'plate' => $request->plate,
             'chassis' => $request->chassis,
             'motor' => $request->motor,
-            'file_car' => $request->file_car,
             'brand_id' => $request->brand_id,
             'type_car_id' => $request->type_car_id,
             'group_id' => $request->group_id,
@@ -38,9 +35,8 @@ class CarController extends Controller
             'color_id' => $request->color_id,
             'example_id' => $request->example_id,
             'driver_id' => $request->driver_id,
-            'number_soat' => $request->number_soat,
-            'date_soat_issue' => $request->date_soat_issue,
-            'date_soat_expiration' => $request->date_soat_expiration,
+            'group_number' => $request->group_number,
+            'number_of_seats' => $request->number_of_seats,
         ]);
 
         return CarResource::make($item)->additional([
@@ -60,7 +56,7 @@ class CarController extends Controller
             'plate' => $request->plate,
             'chassis' => $request->chassis,
             'motor' => $request->motor,
-            'file_car' => $request->file_car,
+            'image_car' => $request->image_car,
             'brand_id' => $request->brand_id,
             'type_car_id' => $request->type_car_id,
             'group_id' => $request->group_id,
@@ -68,9 +64,9 @@ class CarController extends Controller
             'color_id' => $request->color_id,
             'example_id' => $request->example_id,
             'driver_id' => $request->driver_id,
-            'number_soat' => $request->number_soat,
-            'date_soat_issue' => $request->date_soat_issue,
-            'date_soat_expiration' => $request->date_soat_expiration,
+            'group_number' => $request->group_number,
+            'number_of_seats' => $request->number_of_seats,
+            'file_car' => $request->file_car
         ]);
 
         return CarResource::make($item)->additional([

@@ -14,7 +14,7 @@ class Car extends Model
         'plate',
         'chassis',
         'motor',
-        'file_car',
+        'image_car',
         'brand_id',
         'type_car_id',
         'group_id',
@@ -22,7 +22,9 @@ class Car extends Model
         'color_id',
         'example_id',
         'driver_id',
+        'group_number',
         'number_of_seats',
+        'file_car',
     ];
 
     protected $allowFilter = [
