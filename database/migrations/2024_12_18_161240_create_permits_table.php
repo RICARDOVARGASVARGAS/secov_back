@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('permits', function (Blueprint $table) {
             $table->id();
-            $table->integer('number_permit');
             $table->date('issue_date');
             $table->date('expiration_date');
             $table->string('file_permit')->nullable();
-            $table->string('file_work_certificate')->nullable();
             $table->foreignId('car_id')->constrained();
             $table->timestamps();
         });

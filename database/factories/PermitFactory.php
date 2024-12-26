@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Car;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +10,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PermitFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $date = \Carbon\Carbon::parse($this->faker->date());
         return [
-            //
+            'issue_date' => $date->toDateString(),
+            'expiration_date' => $date->copy()->addYear()->toDateString(),
+            'file_permit' => $this->faker->imageUrl(),
+            // 'car_id' => Car::all()->random()->id
         ];
     }
 }

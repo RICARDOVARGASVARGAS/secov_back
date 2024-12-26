@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\RolePermissionController;
 use App\Http\Controllers\Api\TypeCarController;
 use App\Http\Controllers\Api\YearController;
+use App\Http\Controllers\InsuranceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('getBrands', [BrandController::class, 'getBrands'])->name('getBrands');
@@ -86,3 +87,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('permissions', [RolePermissionController::class, 'storePermission']);
     Route::post('roles/{roleId}/assign-permissions', [RolePermissionController::class, 'assignPermissionToRole']);
 });
+
+
+// Insurance - Seguros
+Route::get('getInsurances/{car_id}', [InsuranceController::class, 'getInsurances'])->name('getInsurances');
+Route::get('getInsurance/{id}', [InsuranceController::class, 'getInsurance'])->name('getInsurance');
+Route::post('registerInsurance', [InsuranceController::class, 'registerInsurance'])->name('registerInsurance');
+Route::put('updateInsurance/{item}', [InsuranceController::class, 'updateInsurance'])->name('updateInsurance');
+Route::delete('deleteInsurance/{item}', [InsuranceController::class, 'deleteInsurance'])->name('deleteInsurance');

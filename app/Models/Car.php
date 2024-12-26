@@ -91,6 +91,12 @@ class Car extends Model
         return $this->hasMany(Insurance::class);
     }
 
+    // obtener la última póliza
+    public function latestInsurance()
+    {
+        return $this->hasOne(Insurance::class)->latestOfMany();
+    }
+
     public function permits()
     {
         return $this->hasMany(Permit::class);

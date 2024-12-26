@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
+    // Listar vehículos
     function getCars(ListRequest $request)
     {
         $items = Car::included()->where('plate', 'like', '%' . $request->search . '%')
@@ -22,6 +23,7 @@ class CarController extends Controller
         return CarResource::collection($items);
     }
 
+    // Registrar un vehículo
     function registerCar(CarRequest $request)
     {
         $item = Car::create([
@@ -44,12 +46,14 @@ class CarController extends Controller
         ]);
     }
 
+    // Obtener un vehículo
     function getCar($item)
     {
         $item = Car::included()->find($item);
         return CarResource::make($item);
     }
 
+    // Actualizar un vehículo
     function updateCar(CarRequest $request, Car $item)
     {
         $item->update([
@@ -74,6 +78,7 @@ class CarController extends Controller
         ]);
     }
 
+    // Eliminar un vehículo
     function deleteCar(Car $item)
     {
         try {
@@ -96,7 +101,7 @@ class CarController extends Controller
     // Devolver la lista de vehículos de un conductor
     function getCarsByDriver($driver_id)
     {
-        $item = Car::included()->with(['brand', 'typeCar', 'group', 'year', 'color', 'example'])->where('driver_id', $driver_id)->get();
+        $item = Car::included()->with(['brand', 'typeCar', 'group', 'year', 'color', 'example', 'latestInsurance'])->where('driver_id', $driver_id)->get();
         return CarResource::collection($item);
     }
 }

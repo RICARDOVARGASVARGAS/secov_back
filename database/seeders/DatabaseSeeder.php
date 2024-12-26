@@ -30,12 +30,19 @@ class DatabaseSeeder extends Seeder
         Year::factory(10)->create();
         Driver::factory(20)->create()->each(function ($driver) {
             $driver->licenses()->saveMany(License::factory(3)->make());
+
+            $driver->cars()->saveMany(Car::factory(3)->make())->each(function ($car) {
+                $car->inspections()->saveMany(Inspection::factory(3)->make());
+                $car->insurances()->saveMany(Insurance::factory(3)->make());
+                $car->permits()->saveMany(Permit::factory(3)->make());
+            });
+
             // $driver->cars()->saveMany(Car::factory(3)->make());
         });
-        Car::factory(30)->create()->each(function ($car) {
-            // $car->inspections()->saveMany(Inspection::factory(3)->make());
-            // $car->insurances()->saveMany(Insurance::factory(3)->make());
-            // $car->permits()->saveMany(Permit::factory(3)->make());
-        });
+        // Car::factory(30)->create()->each(function ($car) {
+        //     // $car->inspections()->saveMany(Inspection::factory(3)->make());
+        //     // $car->insurances()->saveMany(Insurance::factory(3)->make());
+        //     // $car->permits()->saveMany(Permit::factory(3)->make());
+        // });
     }
 }
