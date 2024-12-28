@@ -29,6 +29,14 @@ class CarResource extends JsonResource
                     'is_valid' => $this->latestInsurance->expiration_date >= now()->toDateString(),
                 ];
             }),
+            'latest_permit' => $this->whenLoaded('latestPermit', function () {
+                return [
+                    'issue_date' => $this->latestPermit->issue_date,
+                    'expiration_date' => $this->latestPermit->expiration_date,
+                    'file_permit' => $this->latestPermit->file_permit,
+                    'is_valid' => $this->latestPermit->expiration_date >= now()->toDateString(),
+                ];
+            }),
         ]);
     }
 }

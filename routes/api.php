@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\RolePermissionController;
 use App\Http\Controllers\Api\TypeCarController;
 use App\Http\Controllers\Api\YearController;
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('getBrands', [BrandController::class, 'getBrands'])->name('getBrands');
@@ -95,3 +96,11 @@ Route::get('getInsurance/{id}', [InsuranceController::class, 'getInsurance'])->n
 Route::post('registerInsurance', [InsuranceController::class, 'registerInsurance'])->name('registerInsurance');
 Route::put('updateInsurance/{item}', [InsuranceController::class, 'updateInsurance'])->name('updateInsurance');
 Route::delete('deleteInsurance/{item}', [InsuranceController::class, 'deleteInsurance'])->name('deleteInsurance');
+
+
+// Permit - Permisos
+Route::get('getPermits/{car_id}', [PermitController::class, 'getPermits'])->name('getPermits');
+Route::get('getPermit/{id}', [PermitController::class, 'getPermit'])->name('getPermit');
+Route::post('registerPermit', [PermitController::class, 'registerPermit'])->name('registerPermit');
+Route::put('updatePermit/{item}', [PermitController::class, 'updatePermit'])->name('updatePermit');
+Route::delete('deletePermit/{item}', [PermitController::class, 'deletePermit'])->name('deletePermit');

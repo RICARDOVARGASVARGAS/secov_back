@@ -101,4 +101,10 @@ class Car extends Model
     {
         return $this->hasMany(Permit::class);
     }
+
+    // obtener el última permiso
+    public function latestPermit()
+    {
+        return $this->hasOne(Permit::class)->latestOfMany();
+    }
 }

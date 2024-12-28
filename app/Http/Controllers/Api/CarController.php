@@ -101,7 +101,9 @@ class CarController extends Controller
     // Devolver la lista de vehículos de un conductor
     function getCarsByDriver($driver_id)
     {
-        $item = Car::included()->with(['brand', 'typeCar', 'group', 'year', 'color', 'example', 'latestInsurance'])->where('driver_id', $driver_id)->get();
+        $item = Car::included()
+            ->with(['brand', 'typeCar', 'group', 'year', 'color', 'example', 'latestInsurance', 'latestPermit'])
+            ->where('driver_id', $driver_id)->get();
         return CarResource::collection($item);
     }
 }
