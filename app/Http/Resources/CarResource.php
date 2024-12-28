@@ -20,6 +20,14 @@ class CarResource extends JsonResource
             'example' => ExampleResource::make($this->whenLoaded('example')),
             'driver' => DriverResource::make($this->whenLoaded('driver')),
             'example' => ExampleResource::make($this->whenLoaded('example')),
+            'latest_inspection' => $this->whenLoaded('latestInspection', function () {
+                return [
+                    'issue_date' => $this->latestInspection->issue_date,
+                    'expiration_date' => $this->latestInspection->expiration_date,
+                    'file_inspection' => $this->latestInspection->file_inspection,
+                    'is_valid' => $this->latestInspection->expiration_date >= now()->toDateString(),
+                ];
+            }),
             'latest_insurance' => $this->whenLoaded('latestInsurance', function () {
                 return [
                     'number_insurance' => $this->latestInsurance->number_insurance,

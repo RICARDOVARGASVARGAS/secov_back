@@ -86,6 +86,12 @@ class Car extends Model
         return $this->hasMany(Inspection::class);
     }
 
+    // obtener la última inspección
+    public function latestInspection()
+    {
+        return $this->hasOne(Inspection::class)->latestOfMany();
+    }
+
     public function insurances()
     {
         return $this->hasMany(Insurance::class);

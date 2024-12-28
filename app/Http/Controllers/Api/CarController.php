@@ -102,7 +102,7 @@ class CarController extends Controller
     function getCarsByDriver($driver_id)
     {
         $item = Car::included()
-            ->with(['brand', 'typeCar', 'group', 'year', 'color', 'example', 'latestInsurance', 'latestPermit'])
+            ->with(['brand', 'typeCar', 'group', 'year', 'color', 'example', 'latestInsurance', 'latestPermit', 'latestInspection'])
             ->where('driver_id', $driver_id)->get();
         return CarResource::collection($item);
     }

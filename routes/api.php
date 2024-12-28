@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\RolePermissionController;
 use App\Http\Controllers\Api\TypeCarController;
 use App\Http\Controllers\Api\YearController;
+use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
@@ -89,6 +90,12 @@ Route::middleware('auth:api')->group(function () {
     Route::post('roles/{roleId}/assign-permissions', [RolePermissionController::class, 'assignPermissionToRole']);
 });
 
+// Inspections - Inspecciones
+Route::get('getInspections/{car_id}', [InspectionController::class, 'getInspections'])->name('getInspections');
+Route::get('getInspection/{id}', [InspectionController::class, 'getInspection'])->name('getInspection');
+Route::post('registerInspection', [InspectionController::class, 'registerInspection'])->name('registerInspection');
+Route::put('updateInspection/{item}', [InspectionController::class, 'updateInspection'])->name('updateInspection');
+Route::delete('deleteInspection/{item}', [InspectionController::class, 'deleteInspection'])->name('deleteInspection');
 
 // Insurance - Seguros
 Route::get('getInsurances/{car_id}', [InsuranceController::class, 'getInsurances'])->name('getInsurances');
@@ -96,7 +103,6 @@ Route::get('getInsurance/{id}', [InsuranceController::class, 'getInsurance'])->n
 Route::post('registerInsurance', [InsuranceController::class, 'registerInsurance'])->name('registerInsurance');
 Route::put('updateInsurance/{item}', [InsuranceController::class, 'updateInsurance'])->name('updateInsurance');
 Route::delete('deleteInsurance/{item}', [InsuranceController::class, 'deleteInsurance'])->name('deleteInsurance');
-
 
 // Permit - Permisos
 Route::get('getPermits/{car_id}', [PermitController::class, 'getPermits'])->name('getPermits');
