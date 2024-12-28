@@ -44,7 +44,10 @@ class InsuranceController extends Controller
             'expiration_date' => $request->expiration_date,
             'car_id' => $request->car_id,
         ]);
-        return InsuranceResource::make($item);
+
+        return InsuranceResource::make($item)->additional([
+            'message' => 'Seguro Registrado.'
+        ]);
     }
 
     // Actualizar un seguro
@@ -71,13 +74,19 @@ class InsuranceController extends Controller
             'file_insurance' => $request->file_insurance,
             'car_id' => $request->car_id,
         ]);
-        return InsuranceResource::make($item);
+
+        return InsuranceResource::make($item)->additional([
+            'message' => 'Seguro Actualizado.'
+        ]);
     }
 
     // Eliminar un seguro
     public function deleteInsurance(Insurance $item)
     {
         $item->delete();
-        return InsuranceResource::make($item);
+        
+        return InsuranceResource::make($item)->additional([
+            'message' => 'Seguro Eliminado.'
+        ]);
     }
 }
