@@ -7,13 +7,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class InspectionResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return array_merge(parent::toArray($request), [
+            'status' => now()->lessThanOrEqualTo($this->expiration_date),
+        ]);
     }
 }
