@@ -29,7 +29,10 @@ class BrandController extends Controller
             );
         }
 
-        return BrandResource::collection($items);
+        return BrandResource::collection($items)->additional([
+            'message' => 'Lista de Marcas.',
+            'status' => 200
+        ]);
     }
 
 
@@ -41,13 +44,17 @@ class BrandController extends Controller
 
         return BrandResource::make($item)->additional([
             'message' => 'Marca Registrada.',
+            'status' => 200
         ]);
     }
 
     function getBrand($item)
     {
         $item = Brand::included()->find($item);
-        return BrandResource::make($item);
+        return BrandResource::make($item)->additional([
+            'message' => 'Marca Obtenida.',
+            'status' => 200
+        ]);
     }
 
     function updateBrand(BrandRequest $request, Brand $item)
@@ -57,7 +64,8 @@ class BrandController extends Controller
         ]);
 
         return BrandResource::make($item)->additional([
-            'message' => 'Marca Actualizada.'
+            'message' => 'Marca Actualizada.',
+            'status' => 200
         ]);
     }
 
@@ -67,12 +75,15 @@ class BrandController extends Controller
             DB::beginTransaction();
             $item->delete();
             DB::commit();
-            return BrandResource::make($item);
+            return BrandResource::make($item)->additional(([
+                'message' => 'Marca Eliminada.',
+                'status' => 200
+            ]));
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'error' => $e->getMessage(),
-                'message' => 'Marca No Borrada.',
+                'message' => 'Marca No Eliminada.',
                 'status' => 500,
             ], 500);
         }
