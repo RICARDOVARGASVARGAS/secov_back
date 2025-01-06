@@ -115,3 +115,4 @@ Route::delete('deletePermit/{item}', [PermitController::class, 'deletePermit'])-
 
 // File
 Route::post('uploadFile', [FileController::class, 'uploadFile'])->name('uploadFile');
+Route::post('deleteFile', [FileController::class, 'deleteFile'])->name('deleteFile');

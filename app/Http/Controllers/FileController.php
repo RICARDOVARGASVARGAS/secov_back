@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
+    // Subir Archivo
     function uploadFile(Request $request)
     {
         $request->validate([
@@ -28,6 +29,16 @@ class FileController extends Controller
         }
 
         // Eliminar Imagen
+        if ($item->{$request->model_storage}) {
+            $encode = base64_encode($item->{$request->model_storage});
+            $response = $this->delete($encode, $request->api_key);
+
+            if ($response->successful()) {
+                $item->update([
+                    $request->model_storage => null, // Asegúrate de que el modelo tenga este campo
+                ]);
+            }
+        }
 
         // Subir Imagen
         try {
@@ -70,6 +81,67 @@ class FileController extends Controller
                 'message' => 'An error occurred while uploading the file.',
                 'error' => $e->getMessage(),
             ], 500);
+        }
+    }
+
+    // Eliminar Archivo
+    function deleteFile(Request $request)
+    {
+        $request->validate([
+            'model' => ['required', 'string'],
+            'model_id' => ['required', 'integer'],
+            'model_storage' => ['required', 'string'],
+            'api_key' => ['required', 'string'],
+            'encode_url_file' => ['required', 'string'],
+        ]);
+
+        $item = app("App\\Models\\$request->model")->find($request->model_id);
+
+        if (!$item) {
+            return response()->json([
+                'message' => 'Item not found',
+            ], 404);
+        }
+        if (!$item->{$request->model_storage}) {
+            return response()->json([
+                'message' => 'File not found',
+            ], 404);
+        }
+
+        $response = $this->delete($request->encode_url_file, $request->api_key);
+
+        if ($response->successful()) {
+            $item->update([
+                $request->model_storage => null, // Asegúrate de que el modelo tenga este campo
+            ]);
+
+            return response()->json([
+                'message' => 'File deleted and model updated successfully.',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Failed to delete file from external API.',
+                'error' => $response->json(),
+            ], $response->status());
+        }
+    }
+
+    // Borrar Archivo
+    function delete($encode_url_file, $api_key)
+    {
+        // $encode = base64_encode($encode_url_file);
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => $api_key
+            ])->delete('https://storage.sys-code.com/api/files/' . $encode_url_file);
+
+            return $response;
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while deleting the file.',
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 }
