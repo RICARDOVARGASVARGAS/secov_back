@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\RolePermissionController;
 use App\Http\Controllers\Api\TypeCarController;
 use App\Http\Controllers\Api\YearController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\PermitController;
@@ -110,3 +111,7 @@ Route::get('getPermit/{id}', [PermitController::class, 'getPermit'])->name('getP
 Route::post('registerPermit', [PermitController::class, 'registerPermit'])->name('registerPermit');
 Route::put('updatePermit/{item}', [PermitController::class, 'updatePermit'])->name('updatePermit');
 Route::delete('deletePermit/{item}', [PermitController::class, 'deletePermit'])->name('deletePermit');
+
+
+// File
+Route::post('uploadFile', [FileController::class, 'uploadFile'])->name('uploadFile');
