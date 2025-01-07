@@ -36,7 +36,8 @@ class FileController extends Controller
 
                 return response()->json([
                     'message' => 'File uploaded and model updated successfully.',
-                    'image' => $data['file']['url'],
+                    'file' => $data['file'],
+                    'item' => $item
                 ], 200);
             } else {
                 return $this->handleFileUploadFailure($response);
