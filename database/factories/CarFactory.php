@@ -22,7 +22,7 @@ class CarFactory extends Factory
             'plate' => $this->faker->unique()->numerify('###########'),
             'chassis' => $this->faker->unique()->numerify('###########'),
             'motor' => $this->faker->unique()->numerify('###########'),
-            'file_car' => $this->faker->imageUrl(),
+            // 'file_car' => $this->faker->imageUrl(),
             'brand_id' => Brand::all()->random()->id,
             'type_car_id' => TypeCar::all()->random()->id,
             'group_id' => Group::all()->random()->id,

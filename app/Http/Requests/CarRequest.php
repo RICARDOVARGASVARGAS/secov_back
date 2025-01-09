@@ -24,8 +24,8 @@ class CarRequest extends FormRequest
         }
         return [
             'plate' => ['required', $plate],
-            'chassis' => ['required', $chassis, 'string', 'min:3', 'max:50'],
-            'motor' => ['required', $motor, 'string', 'min:3', 'max:50'],
+            'chassis' => ['nullable', $chassis, 'string', 'min:3', 'max:50'],
+            'motor' => ['nullable', $motor, 'string', 'min:3', 'max:50'],
             'image_car' => ['nullable'],
             'brand_id' => ['required', 'exists:brands,id'],
             'type_car_id' => ['required', 'exists:type_cars,id'],
