@@ -38,7 +38,7 @@ class Driver extends Model
         'gender',
     ];
 
-    protected $allowIncluded = ['cars', 'cars.brand', 'cars.typeCar', 'cars.group', 'cars.year', 'cars.color', 'cars.example', 'licenses'];
+    protected $allowIncluded = ['cars', 'cars.brand', 'cars.typeCar', 'cars.group', 'cars.year', 'cars.color', 'cars.example', 'licenses', 'latestLicense'];
 
     public function cars()
     {
@@ -48,6 +48,12 @@ class Driver extends Model
     public function licenses()
     {
         return $this->hasMany(License::class);
+    }
+
+    // obtener la última licencia
+    public function latestLicense()
+    {
+        return $this->hasOne(License::class)->latestOfMany();
     }
 
     public function courses()
