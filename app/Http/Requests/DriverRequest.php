@@ -31,6 +31,7 @@ class DriverRequest extends FormRequest
             'phone_number' => ['nullable', 'string', 'min:3', 'max:20'],
             'address' => ['nullable'],
             'gender' => ['required', 'in:M,F'],
+            'file_driver' => ['nullable'],
         ];
     }
 
@@ -47,7 +48,8 @@ class DriverRequest extends FormRequest
             'email' => 'Email',
             'phone_number' => 'Numero de Teléfono',
             'address' => 'Dirección',
-            'gender' => 'Genero',   
+            'gender' => 'Genero',
+            'file_driver' => 'Documentos del Conductor',
         ];
     }
 }

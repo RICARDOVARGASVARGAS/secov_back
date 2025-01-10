@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->enum('gender', ['M', 'F'])->default('M');
+            $table->string('file_driver')->nullable();
             $table->timestamps();
         });
     }

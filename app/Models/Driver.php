@@ -22,6 +22,7 @@ class Driver extends Model
         'phone_number',
         'address',
         'gender',
+        'file_driver'
     ];
 
     protected $allowFilter = [
