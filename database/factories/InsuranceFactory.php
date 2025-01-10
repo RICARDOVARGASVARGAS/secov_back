@@ -17,7 +17,7 @@ class InsuranceFactory extends Factory
             'number_insurance' => $this->faker->numerify('###########'),
             'issue_date' => $date->toDateString(),
             'expiration_date' => $date->copy()->addYear()->toDateString(),
-            'file_insurance' => $this->faker->imageUrl(),
+            // 'file_insurance' => $this->faker->imageUrl(),
             // 'car_id' => Car::all()->random()->id
         ];
     }

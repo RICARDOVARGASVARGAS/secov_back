@@ -16,7 +16,7 @@ class InspectionFactory extends Factory
         return [
             'issue_date' => $date->toDateString(),
             'expiration_date' => $date->copy()->addYear()->toDateString(),
-            'file_inspection' => $this->faker->imageUrl(),
+            // 'file_inspection' => $this->faker->imageUrl(),
             // 'car_id' => Car::all()->random()->id
         ];
     }

@@ -16,7 +16,7 @@ class PermitFactory extends Factory
         return [
             'issue_date' => $date->toDateString(),
             'expiration_date' => $date->copy()->addYear()->toDateString(),
-            'file_permit' => $this->faker->imageUrl(),
+            // 'file_permit' => $this->faker->imageUrl(),
             // 'car_id' => Car::all()->random()->id
         ];
     }
