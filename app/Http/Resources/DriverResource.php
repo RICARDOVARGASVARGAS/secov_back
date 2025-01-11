@@ -11,7 +11,7 @@ class DriverResource extends JsonResource
     {
         return array_merge(parent::toArray($request), [
             // 'storage' => $this->image ? 'storage/' . $this->image : null,
-            // 'brand' => BrandResource::make($this->whenLoaded('brand')),
+            'cars' => CarResource::collection($this->whenLoaded('cars')),
             'latest_license' => $this->whenLoaded('latestLicense', function () {
                 return [
                     'number' => $this->latestLicense->number,

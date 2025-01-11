@@ -44,6 +44,9 @@ class Car extends Model
         'inspections',
         'insurances',
         'permits',
+        'latestInspection',
+        'latestInsurance',
+        'latestPermit',
     ];
 
     public function brand()
