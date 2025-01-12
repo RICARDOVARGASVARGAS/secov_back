@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('storage-link', function () {
+    // Ejecutar los comandos Artisan
+    Artisan::call('storage:link');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+
+    // Opcional: Mostrar los resultados en el navegador
+    return response()->json([
+        'message' => 'Comandos ejecutados correctamente.',
+        'output' => [
+            'storage_link' => Artisan::output(),
+            'config_clear' => Artisan::output(),
+            'cache_clear' => Artisan::output(),
+            'config_cache' => Artisan::output(),
+        ],
+    ]);
 });

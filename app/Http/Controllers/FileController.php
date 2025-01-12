@@ -11,8 +11,8 @@ use Illuminate\Support\Str;
 class FileController extends Controller
 {
     // Definir URL base para la API de archivos
-    private $storageApiUrl = 'https://storage.sys-code.com/api';
-    // private $storageApiUrl = 'http://storage_sync.test/api';
+    // private $storageApiUrl = 'https://storage.sys-code.com/api';
+    private $storageApiUrl = 'http://storage_sync.test/api';
 
     // Subir Archivo 
     public function uploadFile(UploadFileRequest $request)
