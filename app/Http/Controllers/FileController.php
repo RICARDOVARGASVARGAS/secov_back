@@ -38,12 +38,8 @@ class FileController extends Controller
                         'Accept' => 'application/json',
                     ])->delete($this->storageApiUrl . '/files/' . $uuid);
 
+                    // Actualizar el almacenamiento del modelo a null
                     if (!$response->successful()) {
-                        // return response()->json([
-                        //     'message' => 'Error al eliminar el archivo existente.',
-                        //     'error' => $response->json(),
-                        // ], $response->status());
-                        // Actualizar el almacenamiento del modelo a null
                         $item->update([
                             $request->model_storage => null,
                         ]);
@@ -93,30 +89,6 @@ class FileController extends Controller
                 'message' => 'Error al subir el archivo.',
                 'error' => $response->json(),
             ], $response->status());
-            // Respuesta:
-            // {
-            //     "message": "Archivo subido correctamente.",
-            //     "file": {
-            //         "name": "PLANES.jpg",
-            //         "path": "proyecto-base/Conductor/34f3f5eb-1010-49e6-aa19-9916a9affd4a.jpg",
-            //         "uuid": "34f3f5eb-1010-49e6-aa19-9916a9affd4a",
-            //         "size": 60610,
-            //         "type": "jpg",
-            //         "url": "http://storage_sync.test/storage/proyecto-base/Conductor/34f3f5eb-1010-49e6-aa19-9916a9affd4a.jpg",
-            //         "project_id": 1,
-            //         "updated_at": "2025-01-08T16:04:38.000000Z",
-            //         "created_at": "2025-01-08T16:04:38.000000Z",
-            //         "id": 3
-            //     }
-            // }
-
-            // Error
-            // {
-            //     "message": "Error al subir el archivo.",
-            //     "error": {
-            //         "message": "No se encontró un Token valido."
-            //     }
-            // }
         } catch (\Exception $e) {
             // Manejo de errores en el servidor
             return response()->json([
