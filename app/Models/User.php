@@ -13,11 +13,6 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'document',
         'name',
@@ -25,44 +20,26 @@ class User extends Authenticatable implements JWTSubject
         'last_name',
         'image',
         'email',
+        'phone_number',
         'password',
+        'is_active',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
         return [];
@@ -75,16 +52,37 @@ class User extends Authenticatable implements JWTSubject
 
     public function hasRole($role)
     {
-        return $this->roles->contains('name', $role);
+        return $this->roles->contains('name_en', $role);
     }
 
     public function hasPermission($permission)
     {
         foreach ($this->roles as $role) {
-            if ($role->permissions->contains('name', $permission)) {
+            if ($role->permissions->contains('name_en', $permission)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public function hasAnyPermission(array $permissions)
+    {
+        foreach ($permissions as $permission) {
+            if ($this->hasPermission($permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public function hasAllPermissions(array $permissions)
+    {
+        foreach ($permissions as $permission) {
+            if (!$this->hasPermission($permission)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

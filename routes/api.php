@@ -15,6 +15,18 @@ use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
 
+// Auth
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+});
+
 Route::get('getBrands', [BrandController::class, 'getBrands'])->name('getBrands');
 Route::get('getBrand/{item}', [BrandController::class, 'getBrand'])->name('getBrand');
 Route::post('registerBrand', [BrandController::class, 'registerBrand'])->name('registerBrand');
@@ -71,18 +83,6 @@ Route::delete('deleteCar/{item}', [CarController::class, 'deleteCar'])->name('de
 Route::get('getCarsByDriver/{driver_id}', [CarController::class, 'getCarsByDriver'])->name('getCarsByDriver');
 
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
-});
-
-
 Route::middleware('auth:api')->group(function () {
     Route::get('roles', [RolePermissionController::class, 'indexRolesWithPermissions']);
     Route::get('permissions', [RolePermissionController::class, 'indexPermissions']);
@@ -116,3 +116,7 @@ Route::delete('deletePermit/{item}', [PermitController::class, 'deletePermit'])-
 // File
 Route::post('uploadFile', [FileController::class, 'uploadFile'])->name('uploadFile');
 Route::post('deleteFile', [FileController::class, 'deleteFile'])->name('deleteFile');
+
+
+// Route::get('admin/roles', [RolePermissionController::class, 'getRoles'])
+//     ->middleware('jwt.access:manage_roles,edit_users');
