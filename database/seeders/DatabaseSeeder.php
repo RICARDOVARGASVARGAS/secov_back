@@ -15,6 +15,7 @@ use App\Models\Insurance;
 use App\Models\License;
 use App\Models\Permit;
 use App\Models\TypeCar;
+use App\Models\User;
 use App\Models\Year;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        PermissionRoleSeeder::class;
         Color::factory(10)->create();
         Example::factory(10)->create();
         TypeCar::factory(10)->create();
