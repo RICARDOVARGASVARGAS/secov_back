@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        PermissionRoleSeeder::class;
+        // Ejecutar el seeder de usuarios, roles y permisos
+        $this->call([UserRolePermissionSeeder::class]);
         Color::factory(10)->create();
         Example::factory(10)->create();
         TypeCar::factory(10)->create();
