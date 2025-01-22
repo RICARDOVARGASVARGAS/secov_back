@@ -93,7 +93,8 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        JWTAuth::logout();
+        auth()->logout();
+
         return response()->json(['message' => 'Sesión cerrada con éxito']);
     }
 
@@ -105,7 +106,7 @@ class AuthController extends Controller
     public function refresh()
     {
         try {
-            $token = JWTAuth::refresh();
+            $token = auth()->refresh();
             $user = auth()->user();
             return $this->respondWithToken($token, $user);
         } catch (\Exception $e) {
