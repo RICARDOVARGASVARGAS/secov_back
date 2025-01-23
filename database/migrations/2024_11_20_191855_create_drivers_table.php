@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             // Datos del usuario
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->enum('document_type', ['pasaporte', 'dni'])->default('dni');
             $table->string('document_number')->unique();
             $table->string('name');

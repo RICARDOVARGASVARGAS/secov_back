@@ -11,6 +11,7 @@ class Car extends Model
     use HasFactory, QueryTrait;
 
     protected $fillable = [
+        'uuid',
         'plate',
         'chassis',
         'motor',

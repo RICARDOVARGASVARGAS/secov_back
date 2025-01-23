@@ -19,6 +19,7 @@ class CarFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => $this->faker->uuid(),
             'plate' => $this->faker->unique()->numerify('###########'),
             'chassis' => $this->faker->unique()->numerify('###########'),
             'motor' => $this->faker->unique()->numerify('###########'),

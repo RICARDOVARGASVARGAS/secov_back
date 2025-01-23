@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('plate')->unique(); // Placa
             $table->string('chassis')->unique()->nullable(); // Chasis
             $table->string('motor')->unique()->nullable(); // Motor

@@ -12,6 +12,7 @@ class DriverFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => $this->faker->uuid(),
             'document_type' => $this->faker->randomElement(['pasaporte', 'dni']),
             'document_number' => $this->faker->unique()->numerify('###########'),
             'name' => $this->faker->unique()->name(),

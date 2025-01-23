@@ -11,6 +11,7 @@ class Driver extends Model
     use HasFactory, QueryTrait;
 
     protected $fillable = [
+        'uuid',
         'document_type',
         'document_number',
         'name',
