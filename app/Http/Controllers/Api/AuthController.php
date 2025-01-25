@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         // Si la validación falla, retornar errores
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            return response()->json(['message' => $validator->errors()], 400);
         }
 
         // Obtener las credenciales proporcionadas
@@ -51,22 +51,22 @@ class AuthController extends Controller
 
         // Si no se encuentra el usuario, retornar error
         if (!$user) {
-            return response()->json(['error' => 'Credenciales inválidas'], 401);
+            return response()->json(['message' => 'Credenciales inválidas'], 401);
         }
 
         // Validar si el usuario está activo (opcional)
         if (isset($user->is_active) && !$user->is_active) {
-            return response()->json(['error' => 'El usuario está inactivo.'], 403);
+            return response()->json(['message' => 'El usuario está inactivo.'], 403);
         }
 
         // Intentar autenticar usando las credenciales
         $credentials['email'] = $user->email; // Reemplazar con el correo del usuario
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Credenciales inválidas'], 401);
+                return response()->json(['message' => 'Credenciales inválidas'], 401);
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al generar el token.'], 500);
+            return response()->json(['message' => 'Error al generar el token.'], 500);
         }
 
         // Retornar el token junto con los datos del usuario
@@ -110,7 +110,7 @@ class AuthController extends Controller
             $user = auth()->user();
             return $this->respondWithToken($token, $user);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al refrescar el token.'], 500);
+            return response()->json(['message' => 'Error al refrescar el token.'], 500);
         }
     }
 
