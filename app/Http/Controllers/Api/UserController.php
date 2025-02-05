@@ -8,38 +8,72 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     // Listar usuarios
     public function getUsers(ListRequest $request)
     {
-        $items = User::visible()->get();
+        $items = User::visible()->included()->get();
 
         return UserResource::collection($items);
     }
 
+    // Obtener usuario
+    public function getUser($user)
+    {
+        $user = User::included()->find($user);
+
+        if ($user) {
+            return UserResource::make($user)->additional([
+                'message' => 'Usuario Obtenido.',
+                'status' => 200,
+                'success' => true
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Usuario No Encontrado',
+                'status' => 404,
+                'success' => false
+            ], 404);
+        }
+    }
+
     // Registrar usuario
-    public function register(UserRequest $request)
+    public function registerUser(UserRequest $request)
     {
         $user = User::create([
             'document' => $request->document,
             'name' => $request->name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'image' => $request->image,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
-            'password' => bcrypt($request->document),
-            'is_active' => $request->is_active
+            'password' => Hash::make($request->document),
+            'is_active' => true
         ]);
 
-        return new UserResource($user);
+        return UserResource::make($user)->additional([
+            'message' => 'Usuario Registrado.',
+            'status' => 200,
+            'success' => true
+        ]);
     }
 
     // Actualizar usuario
-    public function update(UserRequest $request, User $user)
+    public function updateUser(UserRequest $request, $user)
     {
+        $user = User::find($user);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Usuario No Encontrado',
+                'status' => 404,
+                'success' => false
+            ], 404);
+        }
+
         $user->update([
             'document' => $request->document,
             'name' => $request->name,
@@ -51,25 +85,47 @@ class UserController extends Controller
             'is_active' => $request->is_active
         ]);
 
-        return new UserResource($user);
-    }
-
-    // Obtener usuario
-    public function getUser($user)
-    {
-        $item = User::included()->find($user);
-        return UserResource::make($item);
+        return UserResource::make($user)->additional([
+            'message' => 'Usuario Actualizado.',
+            'status' => 200,
+            'success' => true
+        ]);
     }
 
     // Eliminar usuario
-    public function delete(User $user)
+    public function deleteUser($user)
     {
-        $user->delete();
-        return response()->json(['message' => 'Usuario Eliminado'], 200);
+        $user = User::find($user);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Usuario No Encontrado',
+                'status' => 404,
+                'success' => false
+            ], 404);
+        }
+
+        try {
+            if ($user->image) {
+                // Eliminar Imagen API
+            }
+            $user->delete();
+            return response()->json([
+                'message' => 'Usuario Eliminado',
+                'status' => 200,
+                'success' => true
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status' => 500,
+                'success' => false
+            ], 500);
+        }
     }
 
     // Actualizar contraseña
-    public function changePassword(Request $request, User $user)
+    public function changePassword(Request $request,    $user)
     {
         $request->validate([
             'password' => 'required',
@@ -79,16 +135,34 @@ class UserController extends Controller
             'new_password' => 'Nueva Contraseña',
         ]);
 
+        $user = User::find($user);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Usuario No Encontrado',
+                'status' => 404,
+                'success' => false
+            ], 404);
+        }
+
         if (password_verify($request->password, $user->password)) {
             $user->update([
-                'password' => bcrypt($request->new_password)
+                'password' => Hash::make($request->new_password)
             ]);
-            return response()->json(['message' => 'Contraseña Actualizada'], 200);
+            return response()->json([
+                'message' => 'Contraseña Actualizada',
+                'status' => 200,
+                'success' => true
+            ], 200);
         } else {
-            return response()->json(['message' => 'Contraseña Actual Incorrecta'], 400);
+            return response()->json([
+                'message' => 'Contraseña Actual Incorrecta',
+                'status' => 400,
+                'success' => false
+            ], 400);
         }
     }
 
     // Roles
-    
+
 }

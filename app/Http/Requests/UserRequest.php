@@ -14,15 +14,15 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         if (request()->routeIs('registerUser')) {
-            $document = 'unique:user,document';
-            $email = 'unique:user,email';
+            $document = 'unique:users,document';
+            $email = 'unique:users,email';
         } elseif (request()->routeIs('updateUser')) {
-            $document =  'unique:user,document,' . request()->route('item')->id;
-            $email =  'unique:user,email,' . request()->route('item')->id;
+            $document =  'unique:users,document,' . request()->route('user');
+            $email =  'unique:users,email,' . request()->route('user');
         }
 
         return [
-            'document' => ['required', $document],
+            'document' => ['required', 'min:8', $document],
             'name' => ['required', 'string', 'min:3', 'max:50'],
             'first_name' => ['required', 'string', 'min:3', 'max:50'],
             'last_name' => ['required', 'string', 'min:3', 'max:50'],
@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'email' => ['required', $email],
             'phone_number' => ['nullable', 'string', 'min:3', 'max:20'],
             'password' => ['nullable', 'string', 'min:8'],
-            'is_active' => ['required', 'boolean'],
+            'is_active' => ['nullable', 'boolean'],
             'visible' => ['nullable', 'boolean'],
         ];
     }
