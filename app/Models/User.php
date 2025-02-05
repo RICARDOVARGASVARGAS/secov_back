@@ -23,6 +23,7 @@ class User extends Authenticatable implements JWTSubject
         'phone_number',
         'password',
         'is_active',
+        'visible',
     ];
 
     protected $hidden = [
@@ -84,5 +85,11 @@ class User extends Authenticatable implements JWTSubject
             }
         }
         return true;
+    }
+
+    // Solo visibles
+    public function scopeVisible($query)
+    {
+        return $query->where('visible', true);
     }
 }

@@ -6,14 +6,15 @@ use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\ExampleController;
+use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\Api\InspectionController;
+use App\Http\Controllers\Api\InsuranceController;
+use App\Http\Controllers\Api\PermitController;
 use App\Http\Controllers\Api\RolePermissionController;
 use App\Http\Controllers\Api\TypeCarController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\YearController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\InspectionController;
-use App\Http\Controllers\InsuranceController;
-use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
 
 // Auth
@@ -120,3 +121,5 @@ Route::post('deleteFile', [FileController::class, 'deleteFile'])->name('deleteFi
 
 // Route::get('admin/roles', [RolePermissionController::class, 'getRoles'])
 //     ->middleware('jwt.access:manage_roles,edit_users');
+
+
