@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ListRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -125,13 +126,13 @@ class UserController extends Controller
     }
 
     // Actualizar contraseña
-    public function changePassword(Request $request,    $user)
+    public function changePasswordUser(Request $request,    $user)
     {
         $request->validate([
-            'password' => 'required',
+            'old_password' => 'required',
             'new_password' => 'required',
         ], [], [
-            'password' => 'Contraseña Actual',
+            'old_password' => 'Contraseña Actual',
             'new_password' => 'Nueva Contraseña',
         ]);
 
@@ -145,7 +146,7 @@ class UserController extends Controller
             ], 404);
         }
 
-        if (password_verify($request->password, $user->password)) {
+        if (password_verify($request->old_password, $user->password)) {
             $user->update([
                 'password' => Hash::make($request->new_password)
             ]);
@@ -163,6 +164,38 @@ class UserController extends Controller
         }
     }
 
-    // Roles
+    // Restablecer contraseña
+    public function resetPasswordUser($user)
+    {
+        $user = User::find($user);
 
+        if (!$user) {
+            return response()->json([
+                'message' => 'Usuario No Encontrado',
+                'status' => 404,
+                'success' => false
+            ], 404);
+        }
+
+        $user->update([
+            'password' => Hash::make($user->document)
+        ]);
+        return response()->json([
+            'message' => 'Contraseña Restablecida',
+            'status' => 200,
+            'success' => true
+        ], 200);
+    }
+
+    // Mostrar Roles
+    public function getRoles()
+    {
+        $roles = Role::with('permissions')->get();
+
+        return response()->json($roles);
+    }
+
+    // Asignar Roles a un Usuario
+
+    // Guardar archivos en este mismo proyecto
 }
