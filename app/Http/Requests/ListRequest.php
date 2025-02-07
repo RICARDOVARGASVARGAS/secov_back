@@ -16,7 +16,7 @@ class ListRequest extends FormRequest
         return [
             'search' => ['nullable', 'string'],
             'page' => ['required', 'integer', 'min:1'],
-            'perPage' => ['required', 'string', 'regex:/^(all|[1-9][0-9]?)$/'],
+            'perPage' => ['required', 'string', 'regex:/^(all|[1-9][0-9]?)$/'], // Permite 'all' o números positivos
             'sort' => ['required', 'in:asc,desc'],
         ];
     }

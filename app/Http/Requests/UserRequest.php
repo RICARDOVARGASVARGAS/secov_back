@@ -13,10 +13,10 @@ class UserRequest extends FormRequest
 
     public function rules(): array
     {
-        if (request()->routeIs('registerUser')) {
+        if (request()->routeIs('user.registerUser')) {
             $document = 'unique:users,document';
             $email = 'unique:users,email';
-        } elseif (request()->routeIs('updateUser')) {
+        } elseif (request()->routeIs('user.updateUser')) {
             $document =  'unique:users,document,' . request()->route('user');
             $email =  'unique:users,email,' . request()->route('user');
         }

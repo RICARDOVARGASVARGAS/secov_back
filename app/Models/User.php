@@ -38,6 +38,8 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
+    protected $allowIncluded = ['roles'];
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

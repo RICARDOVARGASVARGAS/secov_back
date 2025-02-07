@@ -11,7 +11,7 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = Role::create(['name_es' => 'Administrador', 'name_en' => 'admin']);
+        $admin = Role::create(['name' => 'Administrador']);
 
         // Asignar permisos al rol de administrador
         $permissions = Permission::all()->pluck('id')->toArray();

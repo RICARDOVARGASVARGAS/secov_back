@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\QueryTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasFactory;
+    use HasFactory, QueryTrait;
 
     protected $fillable = [
-        'name_en',
-        'name_es',
+        'name',
     ];
+
+    protected $allowIncluded = ['users', 'permissions'];
 
     public function users()
     {

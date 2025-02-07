@@ -16,9 +16,15 @@ class UserController extends Controller
     // Listar usuarios
     public function getUsers(ListRequest $request)
     {
-        $items = User::visible()->included()->get();
+        $items = User::visible()->included()->orderBy('id', $request->sort);
 
-        return UserResource::collection($items);
+        $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
+
+        return UserResource::collection($items)->additional([
+            'message' => 'Usuarios Obtenidos.',
+            'status' => 200,
+            'success' => true
+        ]);
     }
 
     // Obtener usuario
