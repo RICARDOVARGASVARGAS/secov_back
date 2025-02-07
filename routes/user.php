@@ -25,8 +25,5 @@ Route::post('changePasswordUser/{user}', [UserController::class, 'changePassword
 // Restablecer contraseña
 Route::post('resetPasswordUser/{user}', [UserController::class, 'resetPasswordUser'])->name('user.resetPasswordUser');
 
-
-Route::get('getRoles', [UserController::class, 'getRoles'])->name('getRoles');
-
-// Route::post('updatePermission', [UserController::class, 'updatePermission'])->name('users.updatePermission');
-// Route::get('getModules', [UserController::class, 'getModules'])->name('getModules');
+// Asignar Rol a Usuario
+Route::post('assignRoleToUser/{user}', [UserController::class, 'assignRoleToUser'])->name('user.assignRoleToUser');

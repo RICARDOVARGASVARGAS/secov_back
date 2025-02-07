@@ -193,15 +193,34 @@ class UserController extends Controller
         ], 200);
     }
 
-    // Mostrar Roles
-    public function getRoles()
-    {
-        $roles = Role::with('permissions')->get();
-
-        return response()->json($roles);
-    }
-
     // Asignar Roles a un Usuario
+
+    public function assignRoleToUser(Request $request, $user)
+    {
+        $request->validate([
+            'roles' => 'array',
+            'roles.*' => 'exists:roles,id',
+        ], [], [
+            'roles' => 'Roles',
+        ]);
+
+        $user = User::find($user);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Usuario No Encontrado',
+                'status' => 404,
+                'success' => false
+            ], 404);
+        }
+
+        $user->roles()->sync($request->roles);
+        return response()->json([
+            'message' => 'Roles Asignados.',
+            'status' => 200,
+            'success' => true
+        ], 200);
+    }
 
     // Guardar archivos en este mismo proyecto
 }

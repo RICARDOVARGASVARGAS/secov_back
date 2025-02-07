@@ -98,6 +98,8 @@ class RoleController extends Controller
         $request->validate([
             'permissions' => 'array',
             'permissions.*' => 'exists:permissions,id',
+        ], [], [
+            'permissions' => 'Permisos',
         ]);
 
         $role = Role::find($role);
