@@ -194,7 +194,6 @@ class UserController extends Controller
     }
 
     // Asignar Roles a un Usuario
-
     public function assignRoleToUser(Request $request, $user)
     {
         $request->validate([
