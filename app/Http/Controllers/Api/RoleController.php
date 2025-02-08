@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ListRequest;
 use App\Http\Requests\RoleRequest;
+use App\Http\Resources\PermissionResource;
 use App\Http\Resources\RoleResource;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,9 @@ class RoleController extends Controller
     // Listar Roles
     public function getRoles(ListRequest $request)
     {
-        $items = Role::included()->orderBy('id', $request->sort);
+        $items = Role::included()
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->orderBy('id', $request->sort);
 
         $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
 
@@ -90,6 +94,18 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage(), 'status' => 500, 'success' => false], 500);
         }
+    }
+
+    // Listar Permisos
+    public function getPermissions()
+    {
+        $permissions = Permission::included()->get();
+
+        return PermissionResource::collection($permissions)->additional([
+            'message' => 'Permisos Obtenidos.',
+            'status' => 200,
+            'success' => true
+        ]);
     }
 
     // Asignar Permisos a Rol

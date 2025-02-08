@@ -19,5 +19,8 @@ Route::put('updateRole/{role}', [RoleController::class, 'updateRole'])->name('ro
 // Eliminar Rol
 Route::delete('deleteRole/{role}', [RoleController::class, 'deleteRole'])->name('rol.deleteRole');
 
+// Listar Permisos
+Route::get('getPermissions', [RoleController::class, 'getPermissions'])->name('rol.getPermissions');
+
 // Asignar Permisos a Rol
-Route::post('updateRolePermissions/{role}', [RoleController::class, 'updateRolePermissions'])->name('rol.updateRolePermissions');
+Route::put('updateRolePermissions/{role}', [RoleController::class, 'updateRolePermissions'])->name('rol.updateRolePermissions');
