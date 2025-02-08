@@ -16,7 +16,13 @@ class UserController extends Controller
     // Listar usuarios
     public function getUsers(ListRequest $request)
     {
-        $items = User::visible()->included()->orderBy('id', $request->sort);
+        $items = User::visible()->included()
+            ->where('document', 'like', '%' . $request->search . '%')
+            ->orWhere('name', 'like', '%' . $request->search . '%')
+            ->orWhere('first_name', 'like', '%' . $request->search . '%')
+            ->orWhere('last_name', 'like', '%' . $request->search . '%')
+            ->orWhere('email', 'like', '%' . $request->search . '%')
+            ->orderBy('id', $request->sort);
 
         $items = ($request->perPage == 'all' || $request->perPage == null) ? $items->get() : $items->paginate($request->perPage, ['*'], 'page', $request->page);
 
