@@ -26,4 +26,4 @@ Route::post('changePasswordUser/{user}', [UserController::class, 'changePassword
 Route::post('resetPasswordUser/{user}', [UserController::class, 'resetPasswordUser'])->name('user.resetPasswordUser');
 
 // Asignar Rol a Usuario
-Route::post('assignRoleToUser/{user}', [UserController::class, 'assignRoleToUser'])->name('user.assignRoleToUser');
+Route::put('assignRoleToUser/{user}', [UserController::class, 'assignRoleToUser'])->name('user.assignRoleToUser');
