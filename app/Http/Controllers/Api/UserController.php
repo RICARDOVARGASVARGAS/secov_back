@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -115,16 +116,15 @@ class UserController extends Controller
                 'message' => 'Usuario No Encontrado',
                 'status' => 404,
                 'success' => false
-            ], 404);
+            ]);
         }
 
         try {
-            if ($user->image) {
-                // Eliminar Imagen API
-            }
+            DB::beginTransaction();
             $user->delete();
+            DB::commit();
             return response()->json([
-                'message' => 'Usuario Eliminado',
+                'message' => 'Usuario Eliminado.',
                 'status' => 200,
                 'success' => true
             ], 200);
@@ -133,7 +133,7 @@ class UserController extends Controller
                 'message' => $e->getMessage(),
                 'status' => 500,
                 'success' => false
-            ], 500);
+            ]);
         }
     }
 
