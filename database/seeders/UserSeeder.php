@@ -13,13 +13,14 @@ class UserSeeder extends Seeder
     {
         $user = User::create([
             'document' => '12345678',
-            'name' => 'John Doe',
-            'first_name' => 'Mackey',
+            'name' => 'Admin',
+            'first_name' => 'Secov',
             'last_name' => 'Smith',
             'email' => 'admin@gmail.com',
             'phone_number' => '1234567890',
             'password' => Hash::make('password'),
             'is_active' => true,
+            'visible' => false
         ]);
 
         $user->roles()->attach(1);

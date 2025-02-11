@@ -46,6 +46,12 @@ class PermissionSeeder extends Seeder
             ['Crear Asociaciones', 'group.create'],
             ['Editar Asociaciones', 'group.edit'],
             ['Eliminar Asociaciones', 'group.destroy'],
+
+            // Conductores - Driver
+            ['Listar Conductores', 'driver.index'],
+            ['Crear Conductores', 'driver.create'],
+            ['Editar Conductores', 'driver.edit'],
+            ['Eliminar Conductores', 'driver.destroy'],
         ];
 
         foreach ($permissions as $permission) {

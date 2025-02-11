@@ -17,16 +17,6 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\YearController;
 use Illuminate\Support\Facades\Route;
 
-// Auth
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
-    Route::post('refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
-    Route::post('me', [AuthController::class, 'me'])->name('auth.me');
-});
 
 Route::get('getBrands', [BrandController::class, 'getBrands'])->name('getBrands');
 Route::get('getBrand/{item}', [BrandController::class, 'getBrand'])->name('getBrand');
@@ -121,5 +111,3 @@ Route::post('deleteFile', [FileController::class, 'deleteFile'])->name('deleteFi
 
 // Route::get('admin/roles', [RolePermissionController::class, 'getRoles'])
 //     ->middleware('jwt.access:manage_roles,edit_users');
-
-
