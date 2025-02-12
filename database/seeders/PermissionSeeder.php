@@ -50,8 +50,30 @@ class PermissionSeeder extends Seeder
             // Conductores - Driver
             ['Listar Conductores', 'driver.index'],
             ['Crear Conductores', 'driver.create'],
+            ['Ver Conductores', 'driver.show'],
             ['Editar Conductores', 'driver.edit'],
             ['Eliminar Conductores', 'driver.destroy'],
+            ['Administrar Licencias', 'driver.license'],
+            ['Administrar Vehículos', 'driver.car'],
+
+            // Vehículos - Car
+            ['Listar Vehículos', 'car.index'],
+            ['Ver Vehículos', 'car.show'],
+            ['Visualizar Carnets', 'car.cardPermit'],
+
+            // Roles
+            ['Listar Roles', 'role.index'],
+            ['Crear Roles', 'role.create'],
+            ['Editar Roles', 'role.edit'],
+            ['Eliminar Roles', 'role.destroy'],
+            ['Administrar Permisos', 'role.permissions'],
+
+            // Usuarios
+            ['Listar Usuarios', 'user.index'],
+            ['Crear Usuarios', 'user.create'],
+            ['Editar Usuarios', 'user.edit'],
+            ['Eliminar Usuarios', 'user.destroy'],
+            ['Administrar Roles', 'user.roles'],
         ];
 
         foreach ($permissions as $permission) {

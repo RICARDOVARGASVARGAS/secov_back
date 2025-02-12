@@ -12,13 +12,12 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'document' => '12345678',
-            'name' => 'Admin',
-            'first_name' => 'Secov',
-            'last_name' => 'Smith',
+            'document' => '70234397',
+            'name' => 'Mario',
+            'first_name' => 'Ferro',
+            'last_name' => 'Guerreros',
             'email' => 'admin@gmail.com',
-            'phone_number' => '1234567890',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('secov2025'),
             'is_active' => true,
             'visible' => false
         ]);
