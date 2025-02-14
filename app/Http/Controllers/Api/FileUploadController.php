@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\GeneratesUrls;
 use Illuminate\Http\Request;
 use App\Traits\HandlesFileUploads;
 use Illuminate\Database\Eloquent\Model;
@@ -10,11 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class FileUploadController extends Controller
 {
-    use HandlesFileUploads;
+    use HandlesFileUploads, GeneratesUrls;
 
     // Sube un archivo y lo asocia a un modelo específico.
     public function upload(Request $request)
     {
+        // Validación de los datos de entrada
         $request->validate([
             'model' => 'required|string',
             'id' => 'required|integer',
@@ -29,6 +31,7 @@ class FileUploadController extends Controller
             'field' => 'Campo',
         ]);
 
+        // Obtener el modelo y su instancia
         $modelClass = 'App\\Models\\' . $request->input('model');
         $model = $modelClass::findOrFail($request->input('id'));
 
@@ -50,12 +53,19 @@ class FileUploadController extends Controller
             $model->save();
 
             // Genera la URL completa del archivo
-            $url = Storage::url($path);
+            $relativeUrl = Storage::url($path); // Ruta relativa del archivo
+            $fullUrl = $this->getFullUrl($path); // URL completa para acceder al archivo
 
+            // Agrega un campo dinámico al modelo con el nombre "field_url"
+            $model->setAttribute($field . '_url', $fullUrl);
+
+            // Devuelve la respuesta JSON con el modelo actualizado
             return response()->json([
                 'message' => 'Archivo subido correctamente',
                 'path' => $path,
-                'url' => $url, // URL completa para acceder al archivo
+                'url' => $fullUrl,
+                'success' => true,
+                'item' => $model, // El modelo incluirá el campo dinámico "field_url"
             ], 200);
         }
 
@@ -90,6 +100,8 @@ class FileUploadController extends Controller
 
             return response()->json([
                 'message' => 'Archivo eliminado correctamente',
+                'success' => true,
+                'item' => $model
             ], 200);
         }
 

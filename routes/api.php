@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\ExampleController;
-use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\InspectionController;
@@ -103,15 +102,3 @@ Route::get('getPermit/{id}', [PermitController::class, 'getPermit'])->name('getP
 Route::post('registerPermit', [PermitController::class, 'registerPermit'])->name('registerPermit');
 Route::put('updatePermit/{item}', [PermitController::class, 'updatePermit'])->name('updatePermit');
 Route::delete('deletePermit/{item}', [PermitController::class, 'deletePermit'])->name('deletePermit');
-
-
-// File
-Route::post('uploadFile', [FileController::class, 'uploadFile'])->name('uploadFile');
-Route::post('deleteFile', [FileController::class, 'deleteFile'])->name('deleteFile');
-
-// File Ultimo con trait
-Route::post('upload', [FileUploadController::class, 'upload'])->name('upload');
-Route::post('delete', [FileUploadController::class, 'delete'])->name('delete');
-
-// Route::get('admin/roles', [RolePermissionController::class, 'getRoles'])
-//     ->middleware('jwt.access:manage_roles,edit_users');
