@@ -15,16 +15,18 @@ class DriverResource extends JsonResource
     {
         return array_merge(parent::toArray($request), [
             // Genera la URL completa para la imagen del conductor
-            'image_url' => $this->getFullUrl($this->image),
-
+            'image_url' => $this->when($this->image, $this->getFullUrl($this->image)),
+            
             // Genera la URL completa para el archivo del conductor
-            'file_driver_url' => $this->getFullUrl($this->file_driver),
+            'file_driver_url' => $this->when($this->file_driver, $this->getFullUrl($this->file_driver)),
 
             // Carga la relación "cars" si está disponible
             'cars' => CarResource::collection($this->whenLoaded('cars')),
 
             // Carga la relación "latestLicense" si está disponible
             'latest_license' => $this->whenLoaded('latestLicense', function () {
+
+                // LicenseResource::collection($this->latestLicense);
                 return [
                     'number' => $this->latestLicense->number,
                     'class' => $this->latestLicense->class,

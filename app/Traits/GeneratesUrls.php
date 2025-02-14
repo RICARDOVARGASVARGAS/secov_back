@@ -15,6 +15,8 @@ trait GeneratesUrls
         }
 
         // Combina la URL base de la aplicación con la ruta relativa del archivo
-        return config('app.url') . Storage::url($path);
+        // return config('app.url') . Storage::url($path);
+
+        return Storage::url($path);
     }
 }

@@ -103,7 +103,8 @@ class DriverController extends Controller
             return $license;
         });
 
-        return DriverResource::collection($licensesWithStatus);
+        return LicenseResource::collection($licensesWithStatus);
+        // return DriverResource::collection($licensesWithStatus);
     }
 
     // Obtener licencia de un conductor
