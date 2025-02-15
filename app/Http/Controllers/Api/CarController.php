@@ -7,12 +7,16 @@ use App\Http\Requests\CarRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
+use App\Traits\HandlesFileUploads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class CarController extends Controller
 {
+
+    use HandlesFileUploads;
+
     // Listar vehículos
     function getCars(ListRequest $request)
     {
@@ -80,22 +84,29 @@ class CarController extends Controller
     }
 
     // Eliminar un vehículo
-    function deleteCar(Car $item)
+    function deleteCar($item)
     {
+        $item = Car::find($item);
+
+        if (!$item) {
+            return response()->json(['message' => 'No encontrado'], 404);
+        }
+
         try {
             DB::beginTransaction();
+
+            if ($item->file_car) {
+                $this->deleteFile($item->file_car);
+            }
+
             $item->delete();
+
             DB::commit();
-            return CarResource::make($item)->additional(([
-                'message' => 'Vehículo Eliminado.',
-            ]));
+
+            return response()->json(['message' => 'Vehículo Eliminado.'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'error' => $e->getMessage(),
-                'message' => 'Car No Eliminado.',
-                'status' => 500,
-            ], 500);
+            return response()->json(['message' => 'Ocurrió un error'], 500);
         }
     }
 
@@ -109,80 +120,4 @@ class CarController extends Controller
             ->get();
         return CarResource::collection($item);
     }
-
-    // Permisos de circulación
-
-    //  Lista de vehículos que tienen todo en regla
-    // function carsInCompliance()
-    // {
-    //     $carsInCompliance = Car::whereHas('latestPermit', function ($query) {
-    //         $query->where('expiration_date', '>=', Carbon::now());
-    //     })
-    //         ->whereHas('latestInsurance', function ($query) {
-    //             $query->where('expiration_date', '>=', Carbon::now());
-    //         })
-    //         ->whereHas('latestInspection', function ($query) {
-    //             $query->where('expiration_date', '>=', Carbon::now());
-    //         })
-    //         ->whereHas('driver.latestLicense', function ($query) {
-    //             $query->where('renewal_date', '>=', Carbon::now());
-    //         })
-    //         ->with([
-    //             'latestPermit',
-    //             'latestInsurance',
-    //             'latestInspection',
-    //             'driver.latestLicense'
-    //         ])
-    //         ->get();
-    // }
-
-    // Verificar si un vehículo específico cumple con las condiciones de circulación
-    // public function checkCarCompliance($carId)
-    // {
-
-    //     $car = Car::with([
-    //         'latestPermit',
-    //         'latestInsurance',
-    //         'latestInspection',
-    //         'driver.latestLicense'
-    //     ])->find($carId);
-
-    //     if ($car) {
-    //         $isInCompliance =
-    //             optional($car->latestPermit)->expiration_date >= Carbon::now() &&
-    //             optional($car->latestInsurance)->expiration_date >= Carbon::now() &&
-    //             optional($car->latestInspection)->expiration_date >= Carbon::now() &&
-    //             optional($car->driver->latestLicense)->renewal_date >= Carbon::now();
-
-    //         return response()->json([
-    //             'car_id' => $car->id,
-    //             'in_compliance' => $isInCompliance,
-    //             'details' => $car
-    //         ]);
-    //     } else {
-    //         return response()->json(['message' => 'Vehicle not found'], 404);
-    //     }
-    // }
-
-    // Lista de todos los vehículos con un campo adicional indicando si cumplen o no
-    // public function allCarsCompliance()
-    // {
-    //     $cars = Car::with([
-    //         'latestPermit',
-    //         'latestInsurance',
-    //         'latestInspection',
-    //         'driver.latestLicense'
-    //     ])
-    //         ->get()
-    //         ->map(function ($car) {
-    //             $isInCompliance =
-    //                 optional($car->latestPermit)->expiration_date >= Carbon::now() &&
-    //                 optional($car->latestInsurance)->expiration_date >= Carbon::now() &&
-    //                 optional($car->latestInspection)->expiration_date >= Carbon::now() &&
-    //                 optional($car->driver->latestLicense)->renewal_date >= Carbon::now();
-
-    //             $car->in_compliance = $isInCompliance; // Campo adicional
-    //             return $car;
-    //         });
-    // }
 }
