@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\InspectionController;
 use App\Http\Controllers\Api\InsuranceController;
+use App\Http\Controllers\Api\LicenseController;
 use App\Http\Controllers\Api\PermitController;
 use App\Http\Controllers\Api\RolePermissionController;
 use App\Http\Controllers\Api\TypeCarController;
@@ -59,11 +60,11 @@ Route::get('getDriver/{item}', [DriverController::class, 'getDriver'])->name('ge
 Route::post('registerDriver', [DriverController::class, 'registerDriver'])->name('registerDriver');
 Route::put('updateDriver/{item}', [DriverController::class, 'updateDriver'])->name('updateDriver');
 Route::delete('deleteDriver/{item}', [DriverController::class, 'deleteDriver'])->name('deleteDriver');
-Route::get('getDriverLicenses/{item}', [DriverController::class, 'getDriverLicenses'])->name('getDriverLicenses');
-Route::get('getDriverLicense/{item}', [DriverController::class, 'getDriverLicense'])->name('getDriverLicense');
-Route::post('registerDriverLicense', [DriverController::class, 'registerDriverLicense'])->name('registerDriverLicense');
-Route::put('updateDriverLicense/{license}', [DriverController::class, 'updateDriverLicense'])->name('updateDriverLicense');
-Route::delete('deleteDriverLicense/{license}', [DriverController::class, 'deleteDriverLicense'])->name('deleteDriverLicense');
+Route::get('getDriverLicenses/{item}', [LicenseController::class, 'getDriverLicenses'])->name('getDriverLicenses');
+Route::get('getDriverLicense/{item}', [LicenseController::class, 'getDriverLicense'])->name('getDriverLicense');
+Route::post('registerDriverLicense', [LicenseController::class, 'registerDriverLicense'])->name('registerDriverLicense');
+Route::put('updateDriverLicense/{license}', [LicenseController::class, 'updateDriverLicense'])->name('updateDriverLicense');
+Route::delete('deleteDriverLicense/{license}', [LicenseController::class, 'deleteDriverLicense'])->name('deleteDriverLicense');
 
 
 Route::get('getCars', [CarController::class, 'getCars'])->name('getCars');

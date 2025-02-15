@@ -13,8 +13,7 @@ class LicenseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return array_merge(parent::toArray($request), [
-            'hola' => 'hola',
-            'file_url' => $this->getFullUrl($this->file),
+            'file_url' => $this->when($this->file, $this->getFullUrl($this->file)),
         ]);
     }
 }
