@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\PermitResource;
 use App\Models\Permit;
+use App\Traits\HandlesFileUploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PermitController extends Controller
 {
+    use HandlesFileUploads;
+    
     // Obtener los permisos de un vehículo
     public function getPermits($car_id)
     {
@@ -76,12 +80,35 @@ class PermitController extends Controller
     }
 
     // Eliminar un Permiso
-    public function deletePermit(Permit $item)
+    public function deletePermit($item)
     {
-        $item->delete();
+        $item = Permit::find($item);
 
-        return PermitResource::make($item)->additional([
-            'message' => 'Permiso Eliminado.'
-        ]);
+        if (!$item) {
+            return response()->json(['message' => 'No encontrado'], 404);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            if ($item->file_permit) {
+                $this->deleteFile($item->file_permit);
+            }
+
+            $item->delete();
+
+            DB::commit();
+            return PermitResource::make($item)->additional([
+                'message' => 'Permiso Eliminado.',
+                'success' => true
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Capturar excepciones (por ejemplo, restricciones de clave foránea)
+            return response()->json([
+                'message' => 'No se pudo eliminar el ítem debido a restricciones de la base de datos.',
+                'error' => $e,
+            ]);
+        }
     }
 }
