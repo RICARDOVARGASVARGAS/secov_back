@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait HandlesFileUploads
 {
+    // Sube un archivo al almacenamiento
     protected function uploadFile(UploadedFile $file, string $folder): ?string
     {
         if ($file) {
@@ -17,12 +18,14 @@ trait HandlesFileUploads
         return null;
     }
 
+    //Elimina un archivo del almacenamiento si existe.
     protected function deleteFile(string $path): bool
     {
+        // Verifica si el archivo existe antes de intentar eliminarlo
         if (Storage::disk('public')->exists($path)) {
             return Storage::disk('public')->delete($path);
         }
 
-        return false;
+        return false; // Retorna false si el archivo no existe
     }
 }

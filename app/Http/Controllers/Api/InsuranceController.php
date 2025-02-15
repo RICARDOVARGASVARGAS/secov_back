@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\InsuranceResource;
 use App\Models\Insurance;
+use App\Traits\HandlesFileUploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InsuranceController extends Controller
 {
-
+    use HandlesFileUploads;
+    
     // Obtener los seguros de un vehículo
     public function getInsurances($car_id)
     {
@@ -83,12 +86,35 @@ class InsuranceController extends Controller
     }
 
     // Eliminar un seguro
-    public function deleteInsurance(Insurance $item)
+    public function deleteInsurance($item)
     {
-        $item->delete();
-        
-        return InsuranceResource::make($item)->additional([
-            'message' => 'Seguro Eliminado.'
-        ]);
+        $item = Insurance::find($item);
+
+        if (!$item) {
+            return response()->json(['message' => 'No encontrado'], 404);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            if ($item->file_insurance) {
+                $this->deleteFile($item->file_insurance);
+            }
+
+            $item->delete();
+
+            DB::commit();
+            return InsuranceResource::make($item)->additional([
+                'message' => 'Seguro Eliminado.',
+                'success' => true
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Capturar excepciones (por ejemplo, restricciones de clave foránea)
+            return response()->json([
+                'message' => 'No se pudo eliminar el ítem debido a restricciones de la base de datos.',
+                'error' => $e,
+            ]);
+        }
     }
 }
