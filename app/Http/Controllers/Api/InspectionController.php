@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\InspectionResource;
 use App\Models\Inspection;
+use App\Traits\HandlesFileUploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InspectionController extends Controller
 {
+    use HandlesFileUploads;
+
     // Obtener los Inspecciones de un vehículo
     public function getInspections($car_id)
     {
@@ -76,12 +80,35 @@ class InspectionController extends Controller
     }
 
     // Eliminar un Inspección
-    public function deleteInspection(Inspection $item)
+    public function deleteInspection($item)
     {
-        $item->delete();
+        $item = Inspection::find($item);
 
-        return InspectionResource::make($item)->additional([
-            'message' => 'Inspección Eliminada.'
-        ]);
+        if (!$item) {
+            return response()->json(['message' => 'No encontrado'], 404);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            if ($item->file_inspection) {
+                $this->deleteFile($item->file_inspection);
+            }
+
+            $item->delete();
+
+            DB::commit();
+            return InspectionResource::make($item)->additional([
+                'message' => 'Inspección Eliminada.',
+                'success' => true
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Capturar excepciones (por ejemplo, restricciones de clave foránea)
+            return response()->json([
+                'message' => 'No se pudo eliminar el ítem debido a restricciones de la base de datos.',
+                'error' => $e,
+            ]);
+        }
     }
 }
