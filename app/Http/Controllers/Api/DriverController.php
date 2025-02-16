@@ -72,20 +72,30 @@ class DriverController extends Controller
         ]);
     }
 
-    function deleteDriver(Driver $item)
+    function deleteDriver($item)
     {
+        $item = Driver::find($item);
+
+        if (!$item) {
+            return response()->json(['message' => 'No encontrado'], 404);
+        }
+
         try {
             DB::beginTransaction();
+            if ($item->image) {
+                $this->deleteFile($item->image);
+            }
             $item->delete();
             DB::commit();
             return DriverResource::make($item)->additional(([
-                'message' => 'Conductor Borrado.',
+                'message' => 'Conductor Eliminado.',
+                'success' => true
             ]));
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'error' => $e->getMessage(),
-                'message' => 'Driver No Borrado.',
+                'message' => 'Conductor No Eliminado.',
                 'status' => 500,
             ], 500);
         }
