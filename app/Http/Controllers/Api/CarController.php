@@ -103,7 +103,10 @@ class CarController extends Controller
 
             DB::commit();
 
-            return response()->json(['message' => 'Vehículo Eliminado.'], 200);
+            return CarResource::make($item)->additional([
+                'message' => 'Vehículo Eliminado.',
+                'success' => true
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'Ocurrió un error'], 500);
