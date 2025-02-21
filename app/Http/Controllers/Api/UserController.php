@@ -142,7 +142,7 @@ class UserController extends Controller
     }
 
     // Actualizar contraseña
-    public function changePasswordUser(Request $request,    $user)
+    public function changePasswordUser(Request $request, $user)
     {
         $request->validate([
             'old_password' => 'required',
@@ -151,6 +151,7 @@ class UserController extends Controller
             'old_password' => 'Contraseña Actual',
             'new_password' => 'Nueva Contraseña',
         ]);
+
 
         $user = User::find($user);
 
@@ -230,6 +231,4 @@ class UserController extends Controller
             'success' => true
         ], 200);
     }
-
-    // Guardar archivos en este mismo proyecto
 }

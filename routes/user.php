@@ -20,7 +20,7 @@ Route::put('updateUser/{user}', [UserController::class, 'updateUser'])->name('us
 Route::delete('deleteUser/{user}', [UserController::class, 'deleteUser'])->name('user.deleteUser');
 
 // Actualizar contraseña
-Route::post('changePasswordUser/{user}', [UserController::class, 'changePasswordUser'])->name('user.changePasswordUser');
+Route::put('changePasswordUser/{user}', [UserController::class, 'changePasswordUser'])->name('user.changePasswordUser');
 
 // Restablecer contraseña
 Route::post('resetPasswordUser/{user}', [UserController::class, 'resetPasswordUser'])->name('user.resetPasswordUser');
