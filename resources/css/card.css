@@ -1,0 +1,8 @@
+h1{
+    text-align: center;
+    margin: 20px;
+    font-size: 50px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: yellowgreen;
+}

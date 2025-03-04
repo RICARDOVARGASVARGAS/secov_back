@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 /*
@@ -35,3 +36,7 @@ Route::get('storage-link', function () {
         ],
     ]);
 });
+
+Route::get('/card', [CardController::class, 'show'])->name('card.show');
+
+Route::get('/download-cards', [CardController::class, 'download'])->name('card.download');
